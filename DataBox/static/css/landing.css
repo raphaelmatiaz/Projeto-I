@@ -181,7 +181,7 @@ em:hover {
     min-height: 2rem;
     max-height: 10rem;
     /* background-color: red; */
-    background-image: url(media/logo.png);
+    background-image: url(/staticfiles/media/logo.png);
     background-repeat: no-repeat;
     background-size: contain;
 }
