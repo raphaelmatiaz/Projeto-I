@@ -37,8 +37,11 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "landing",
     "DataBox",
+    "landing",
+    "getstarted",
+    "auth_staff",
+    "auth_user",
 
 ]
 

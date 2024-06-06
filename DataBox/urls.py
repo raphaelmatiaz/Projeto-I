@@ -23,6 +23,9 @@ from . import views
 urlpatterns = [
 
     path("admin/", admin.site.urls),
-    path("hello/", include('landing.urls')),
-    path("", views.landing_page)
+    path("", include('landing.urls')),
+    path("get-started/", include('getstarted.urls')),
+    path("user/", include('auth_user.urls')),
+    path("staff/", include('auth_staff.urls'))
+
 ]
