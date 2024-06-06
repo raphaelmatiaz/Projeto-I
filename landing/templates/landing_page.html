@@ -1,16 +1,22 @@
 {% extends "auth_base.html" %}
 
 {% block content %}
+
 <div id="content">
     <div id="logo"></div>
     <div id="slogan">
         <h1>Upload, download, and manage your files, anywhere.</h1>
     </div>
-    <div id="cta-button">
-        <button id="get-started-button">Get Started</button>
-    </div>
+    
+        <a id="get-started-button" href="{% url 'get_started' %}">
+            <div id="cta-button">
+                <p>Get started</p>
+            </div>
+        </a>
+   
     <div id="login-path">
         <p>Already have an account? Login <a href="#"><em id="login-link">Here</em></a></p>
     </div>
 </div>
+
     {% endblock %}
