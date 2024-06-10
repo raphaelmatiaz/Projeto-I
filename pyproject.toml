@@ -9,6 +9,7 @@ readme = "README.md"
 python = "^3.12"
 django = "^5.0.6"
 mysqlclient = "^2.2.4"
+django-orm = "^2.0.5"
 
 
 [build-system]

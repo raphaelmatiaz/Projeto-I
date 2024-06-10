@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataBox</title>
+    <link rel="stylesheet" href= "{% static 'auth_user/css/user_register.css' %}">
+
+</head>
+<body>
+    
+    <main>
+        <div id="content">
+            <div id="logo">
+                <img src="/static/media/logo.png">
+            </div>
+            <div id="switch-buttons">
+                <button id="user-button">User</button>
+                <button id="staff-button">Staff</button>
+            </div>
+            <div id="register-info">
+                <h1>Register <em>User</em></h1>
+                <h3>Gain access to a personal drive. Upload, Download and manage 
+                    personal files</h3>
+            </div>
+
+            <div id="user-register-form-wrapper">
+                <form id="user-register-form"><form>
+                    <label for="username">Username</label>
+                    <input id="username" type="text">
+
+                    <label for="user-email">Email</label>
+                    <input id="user-email" type="email">
+
+                    <label for="user-password">Password</label>
+                    <input id="user-password" type="password">
+
+                    <label for="confirm-password">Confirm Password</label>
+                    <input id="confirm-password" type="password">
+
+                    <label for="submit"></label>
+                    <button id="submit" type="submit">Submit</button>
+                </form>
+            </div>
+        
+        
+        </div>
+    </main>
+    <aside>
+        <div class="artbox-top"></div>
+        <div class="artbox-bot"></div>
+    </aside>
+
+</body>
+</html>
