@@ -21,16 +21,26 @@
     /* COLORS */
     --color-primary: #179283;
     --color-secondary: #00695D;
+    --color-terciary: #E96200;
     --color-light: #FFFFFF;
     --color-grey-1: #EEEEEE;
     --color-grey-2: #888888;
     --color-dark: #000000;
 
+    --color-grey-hover: #dedede;
+    --color-grey-clicked: #9f9f9f;
+
     /* PADDING, MARGINS & SPEED */
     --h-padding: 20px;
     --v-padding: 20px;
+    --input-padding: 1vw;
     --gap: 20px;
     --speed: 0.5s;
+    --border-1: 5px;
+
+    /*SHADOWS*/
+
+    --button-shadow-1: 0px 10px 15px rgba(0, 0, 0, 0.68);
 
     /* SVGs */
 

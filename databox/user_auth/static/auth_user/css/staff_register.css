@@ -58,8 +58,11 @@ aside {
 
 aside > .artbox-top {
 
-    background: conic-gradient(from 180deg at 50% 50%, #00695D -90deg, #000000 270deg, #00695D 270deg, #000000 630deg);
+    background: conic-gradient(from 180deg at 50% 50%, var(--color-terciary) -90deg, var(--color-dark) 270deg, var(--color-terciary) 270deg, #000000 630deg);
     flex: 1;
+    /* Frame 10 */
+
+
 }
 
 
@@ -84,7 +87,7 @@ h3 {
 
 em {
 
-    color: var(--color-primary);
+    color: var(--color-terciary);
     font-style: normal;
     font-weight: bold;
 }
@@ -99,7 +102,7 @@ em {
     font-size: 1.4vw;
     border-radius: 5px;
     border: none;
-    background: var(--color-primary);
+    background: var(--color-terciary);
     background-color: var(--color-grey-1);
     color: var(--color-dark);
 
@@ -220,7 +223,7 @@ form > button {
     height: 6vh;
     font-size: 1.4vw;
     padding: 4px;
-    background-color: var(--color-primary);
+    background-color: var(--color-terciary);
     color: var(--color-light);
     border-radius: var(--border-1);
     margin-top: 2vh;
@@ -234,7 +237,7 @@ form > button {
 }
 
 .form-button:hover {
-    background-color: var(--color-secondary);
+    background-color: var(--color-terciary);
     scale: 1.01;
     cursor: pointer;
 }
@@ -286,12 +289,6 @@ form > button {
 
 
 #user-button {
-    background: var(--color-primary);
-    color: var(--color-light);
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.596) inset;
-}
-
-#staff-button {
     background: var(--color-light);
     color: var(--color-dark);
     cursor: pointer;
@@ -299,8 +296,16 @@ form > button {
     transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;  
 }
 
+#staff-button {
 
-#staff-button:hover {
+
+    background: var(--color-terciary);
+    color: var(--color-light);
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.596) inset;
+}
+
+
+#user-button:hover {
     background-color: var(--color-grey-hover);
     box-shadow: 5px 3px 10px rgba(0, 0, 0, 0.454);
     scale: 1.05;
