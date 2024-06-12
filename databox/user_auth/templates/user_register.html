@@ -26,23 +26,45 @@
             </div>
 
             <div id="user-register-form-wrapper">
-                <form id="user-register-form"><form>
+                <form id="user-register-form" method="post" action="{% url 'register' %}">
+                    {% csrf_token %}
+                    
                     <label for="username">Username</label>
-                    <input id="username" type="text" placeholder="Enter a username">
-
+                    <input id="username" name="username" type="text" placeholder="Enter a username" required>
+                    
                     <label for="user-email">Email</label>
-                    <input id="user-email" type="email" placeholder="Enter your email">
-
+                    <input id="user-email" name="email" type="email" placeholder="Enter your email" required>
+                    
                     <label for="user-password">Password</label>
-                    <input id="user-password" type="password" placeholder="Enter a password">
-
+                    <input id="user-password" name="password1" type="password" placeholder="Enter a password" required>
+                    
                     <label for="confirm-password">Confirm Password</label>
-                    <input id="confirm-password" type="password" placeholder="Enter password (again)">
-
+                    <input id="confirm-password" name="password2" type="password" placeholder="Enter password (again)" required>
+                    
                     <label for="submit"></label>
                     <button class="form-button" id="submit" type="submit">Submit</button>
                 </form>
             </div>
+
+
+            {% comment %} <div id="user-register-form-wrapper">
+                <form id="user-register-form"><form>
+                    <label for="username">Username</label>
+                    <input id="username" name="username" type="text" placeholder="Enter a username" required>
+
+                    <label for="user-email">Email</label>
+                    <input id="user-email" name="email" type="email" placeholder="Enter your email" required>
+
+                    <label for="user-password">Password</label>
+                    <input id="user-password" name="password" type="password" placeholder="Enter a password" required>
+
+                    <label for="confirm-password">Confirm Password</label>
+                    <input id="confirm-password" name="confirm_password" type="password" placeholder="Enter password (again)" required>
+
+                    <label for="submit"></label>
+                    <button class="form-button" id="submit" type="submit">Submit</button>
+                </form>
+            </div> {% endcomment %}
         
         
         </div>
