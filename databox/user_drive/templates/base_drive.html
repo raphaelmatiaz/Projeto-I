@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataBox</title>
+    <link rel="stylesheet" href="{% static 'user_drive/css/base_drive.css' %}">
+</head>
+
+<body>
+
+    <div id="ui-wrapper">
+
+        <div id="logo-wrapper">
+            <a href="{% url 'base__drive'%}">
+                <img id="logo-img" src="{% static "/media/logo.png" %}" alt="">
+            </a>
+        </div>
+
+        <div id="user-options-wrapper">
+            <p id="user-greet">Hello, User</p>
+            <div class="dropdown">
+                <img id="profile-icon" src="{% static "/media/user_profile.png" %}" alt="">
+                <div class="dropdown-content">
+                  <a href="#">Logout</a>
+                  <a href="#">Change Password</a>
+                  <a href="#">Delete Account</a>
+                </div>
+              </div>
+        </div>
+
+        <div id="drive-options-wrapper">
+
+                <div id="new-folder" class="drive-option">
+                        <a href="{% url 'base__drive'%}">
+                            <img src="{% static "/media/new_folder.png" %}" alt="">
+                        <p>New Folder</p>
+                        </a>
+                </div>
+
+
+                <div id="upload-files" class="drive-option">
+                    <a href="{% url 'base__drive'%}">
+                        <img src="{% static "/media/upload_files.png" %}" alt="">
+                    <p>Upload Files</p>
+                    </a>
+                </div>
+            </a>
+        </div>
+
+        <div id="current-folder-path-wrapper">
+            <p>Home</p>
+        </div>
+
+        <div id="drive-view-contents-wrapper">
+        </div>
+
+    </div>
+
+</body>
+</html>

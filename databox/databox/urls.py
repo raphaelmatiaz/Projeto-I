@@ -22,4 +22,5 @@ from django.urls import include
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include('user_auth.urls')),
+    path("drive/", include('user_drive.urls'))
 ]

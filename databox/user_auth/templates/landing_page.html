@@ -6,25 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DataBox</title>
     <link rel="stylesheet" href= "{% static 'auth_user/css/landing.css' %}">
+    <script src="{% static 'auth_user/JS/user_register.js' %}"></script>
+
 </head>
 <body>
     
     <main>
         <div id="content">
-            <div id="logo"></div>
-            <div id="slogan">
-                <h1>Upload, download, and manage your files, anywhere.</h1>
+            <div id="logo">
+                <a href="{% url 'landing__page' %}">
+                    <img src="/static/media/logo.png">
+                </a>
             </div>
             
-                <a id="get-started-button" href="{% url 'register__user' %}">
+            <div id="hero-text-wrapper">
+                <h1>Upload, download, and manage your files, anywhere.</h1>
+            </div>
+            <div id="cta-button-button-wrapper">
+                <a href="{% url 'register'%}">
                     <div id="cta-button">
-                        <p>Get started</p>
+                        <p>Get Started</p>
                     </div>
                 </a>
-           
-            <div id="login-path">
-                <p>Already have an account? Login <a href="#"><em id="login-link">Here</em></a></p>
             </div>
+            <div id="login-path-wrapper">
+                <p>Already have an account? Login <a href="{% url 'login' %}"><em id="login-link">Here</em></a></p>
+            </div>
+
+            
+        
+        
         </div>
     </main>
     <aside>

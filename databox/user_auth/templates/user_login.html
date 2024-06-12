@@ -1,15 +1,51 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataBox</title>
+    <link rel="stylesheet" href= "{% static 'auth_user/css/user_login.css' %}">
+    <script src="{% static 'auth_user/JS/user_register.js' %}"></script>
 
-{% block content %}
-<div id="content">
-    <div id="logo"></div>
-    <div id="slogan">
-        <h1>This is the login user template.</h1>
-    </div>
-    <div id="cta-button">
-    </div>
-    <div id="login-path">
-        <p>Already have an account? Login <a href="#"><em id="login-link">Here</em></a></p>
-    </div>
-</div>
-    {% endblock %}
+</head>
+<body>
+    
+    <main>
+        <div id="content">
+            <div id="logo">
+                <a href="{% url 'landing__page' %}">
+                    <img src="/static/media/logo.png">
+                </a>
+            </div>
+            
+            <div id="login-info">
+                <h1>Login <em>User</em></h1>
+                
+            </div>
+
+            <div id="user-login-form-wrapper">
+                <form id="user-login-form"><form>
+                    <label for="username">Username</label>
+                    <input id="username" type="text" placeholder="Enter a username">
+
+                    <label for="user-password">Password</label>
+                    <input id="user-password" type="password" placeholder="Enter a password">
+
+
+
+                    <label for="submit"></label>
+                    <button class="form-button" id="submit" type="submit">Submit</button>
+                </form>
+            </div>
+        
+        
+        </div>
+    </main>
+    <aside>
+        <div class="artbox-top"></div>
+        <div class="artbox-bot"></div>
+    </aside>
+
+</body>
+</html>

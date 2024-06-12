@@ -58,11 +58,8 @@ aside {
 
 aside > .artbox-top {
 
-    background: conic-gradient(from 180deg at 50% 50%, var(--color-terciary) -90deg, var(--color-dark) 270deg, var(--color-terciary) 270deg, #000000 630deg);
+    background: conic-gradient(from 180deg at 50% 50%, #00695D -90deg, #000000 270deg, #00695D 270deg, #000000 630deg);
     flex: 1;
-    /* Frame 10 */
-
-
 }
 
 
@@ -81,13 +78,13 @@ h1 {
 
 h3 {
     margin-top: 2vh;
-    font-size: 1.4vw;
+    font-size: 1vw;
     font-weight: normal;
 }
 
 em {
 
-    color: var(--color-terciary);
+    color: var(--color-primary);
     font-style: normal;
     font-weight: bold;
 }
@@ -102,7 +99,7 @@ em {
     font-size: 1.4vw;
     border-radius: 5px;
     border: none;
-    background: var(--color-terciary);
+    background: var(--color-primary);
     background-color: var(--color-grey-1);
     color: var(--color-dark);
 
@@ -142,7 +139,7 @@ em {
 }
 
 
-#content > *:nth-child(1) {
+#logo {
 
     /* background-color: green; */
     grid-row-start: 1;
@@ -150,32 +147,35 @@ em {
     grid-column-start: 1;
     grid-column-end: 3;
 
-}
+    width: 14.5vw;
+    height: 8vh;
+    min-height: 2rem;
+    max-height: 10rem;
 
-#content > *:nth-child(2) {
-
-    grid-row-start: 1;
-    grid-row-end: 2;
-    grid-column-start: 3;
-    grid-column-end: 4;
-
-
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 
 
 }
 
-#content > *:nth-child(3) {
+#login-info {
 
     grid-row-start: 2;
     grid-row-end: 3;
     grid-column-start: 2;
     grid-column-end: 4;
 
-    align-self: flex-end;
-
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-#content > *:nth-child(4) {
+#login-info > h1 {
+    margin-top: 3vh;
+}
+
+#user-login-form-wrapper {
 
     grid-row-start: 3;
     grid-row-end: 4;
@@ -184,12 +184,13 @@ em {
 
 
 
-
 }
 
-#content > *:nth-child(4) > form {
 
-    height: 54vh;
+#user-login-wrapper > form {
+
+    height: 52vh;
+    /* background-color: red; */
 
     display: flex;
     flex-direction: column;
@@ -206,7 +207,6 @@ form > * {
 
 form > label {
     font-size: 1vw;
-    margin-bottom: 0.5vh;
 }
 
 form > input {
@@ -217,13 +217,14 @@ form > input {
     border-radius: var(--border-1);
     border: none;
     font-size: 0.8vw;
+    margin-top: 0.5vh;
 }
 
 form > button {
     height: 6vh;
     font-size: 1.4vw;
     padding: 4px;
-    background-color: var(--color-terciary);
+    background-color: var(--color-primary);
     color: var(--color-light);
     border-radius: var(--border-1);
     margin-top: 2vh;
@@ -232,29 +233,18 @@ form > button {
     font-size: 1.4vw;
     box-shadow: var(--button-shadow-1);
     transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;  /* Combine transitions */
+    margin-top: 18vh;
 
 
 }
 
 .form-button:hover {
-    background-color: var(--color-terciary);
+    background-color: var(--color-secondary);
     scale: 1.01;
     cursor: pointer;
+    
 }
 
-
-
-#logo {
-
-    width: 14.5vw;
-    height: 8vh;
-    min-height: 2rem;
-    max-height: 10rem;
-
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
 
 #logo > a {
     width: fit-content;
@@ -289,6 +279,12 @@ form > button {
 
 
 #user-button {
+    background: var(--color-primary);
+    color: var(--color-light);
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.596) inset;
+}
+
+#staff-button {
     background: var(--color-light);
     color: var(--color-dark);
     cursor: pointer;
@@ -296,16 +292,8 @@ form > button {
     transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;  
 }
 
-#staff-button {
 
-
-    background: var(--color-terciary);
-    color: var(--color-light);
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.596) inset;
-}
-
-
-#user-button:hover {
+#staff-button:hover {
     background-color: var(--color-grey-hover);
     box-shadow: 5px 3px 10px rgba(0, 0, 0, 0.454);
     scale: 1.05;
