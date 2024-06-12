@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login
+from django.contrib.auth import login, logout, authenticate
+from django.urls import reverse
+from django.contrib.auth.forms import AuthenticationForm
 from .forms import RegisterForm
+from .forms import LoginForm
 
 # Landing Page.
 def show_landing_page(request):
@@ -25,6 +28,26 @@ def show_register_user(request):
 
 # Login User
 def show_login_user(request):
-    return render(request, 'user_login.html')
+    if request.method == 'POST':
+        form = LoginForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            # breakpoint()
+            if user is not None:
+                if user.is_superuser or user.is_staff:
+                    # Redirect to the admin login page
+                    logout(request)
+                    return redirect('/admin/login')
+                else:
+                    login(request, user)
+                    return redirect('base__drive')
+        else:
+            print("Form is not valid:", form.errors)  # Debugging line
+    else:
+        form = LoginForm()
+    
+    return render(request, 'user_login.html', {'form': form})
 
 

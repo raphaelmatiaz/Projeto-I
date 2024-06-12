@@ -24,7 +24,7 @@
                 
             </div>
 
-            <div id="user-login-form-wrapper">
+            {% comment %} <div id="user-login-form-wrapper">
                 <form id="user-login-form"><form>
                     <label for="username">Username</label>
                     <input id="username" type="text" placeholder="Enter a username">
@@ -32,13 +32,25 @@
                     <label for="user-password">Password</label>
                     <input id="user-password" type="password" placeholder="Enter a password">
 
-
-
+                    <label for="submit"></label>
+                    <button class="form-button" id="submit" type="submit">Submit</button>
+                </form>
+            </div> {% endcomment %}
+        
+            <div id="user-login-form-wrapper">
+                <form id="user-login-form" method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    
+                    <label for="username">Username</label>
+                    <input id="username" name="username" type="text" placeholder="Enter a username" required>
+            
+                    <label for="user-password">Password</label>
+                    <input id="user-password" name="password" type="password" placeholder="Enter a password" required>
+            
                     <label for="submit"></label>
                     <button class="form-button" id="submit" type="submit">Submit</button>
                 </form>
             </div>
-        
         
         </div>
     </main>

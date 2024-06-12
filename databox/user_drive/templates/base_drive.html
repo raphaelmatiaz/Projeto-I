@@ -12,6 +12,24 @@
 
     <div id="ui-wrapper">
 
+        <div id="pop-up-view">
+            <div id="create-new-folder-wrapper">
+                <div id="id="create-new-folder"">
+                    <p >Create New Folder</p>
+                </div>
+                <div id="new-folder-form-wrapper">
+                    <form id="new-folder-form" action="">
+                        <label for="folder-name">Folder Name</label>
+                        <input id="folder-name" type="text" required>
+                        <div value="cancel-submit-wrapper">
+                            <button id="cancel">Cancel</button>
+                            <button id="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <div id="logo-wrapper">
             <a href="{% url 'base__drive'%}">
                 <img id="logo-img" src="{% static "/media/logo.png" %}" alt="">

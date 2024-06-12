@@ -42,8 +42,8 @@ body {
     height: 100%;
     
     display: grid;
-    grid-template-rows: 10% 15% 75% ;
-    grid-template-columns: 25% 50% 25%;
+    grid-template-rows: 7% 18% 75% ;
+    grid-template-columns: 15% 60% 25%;
 
 }
 
@@ -123,6 +123,8 @@ body {
 
     display: flex;
     align-items: flex-end;
+
+    margin-bottom: 1h;
 }
 
 #drive-view-contents-wrapper {
@@ -131,6 +133,7 @@ body {
     grid-column: 2 / 4;
 
     background-color: var(--color-primary);
+    box-shadow: 5px 5px 5px var(--color-secondary) inset;
 }
 
 
@@ -138,6 +141,55 @@ body {
     
 }
 
+
+#pop-up-view {
+
+    width: 100vw;
+    height: 100dvh;
+    position: absolute;
+    inset: 0;
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #00695d5f;
+}
+
+#create-new-folder-wrapper {
+    width: 60vw;
+    height: 40vh;
+    background-color: var(--color-light);
+    box-shadow: 10px 10px 5px rgba(62, 62, 62, 0.556);
+    padding: 4vw;
+    
+    display: grid;
+    grid-template-rows: 20% 80%;
+    grid-template-columns: 5% 95%;
+}
+
+#create-new-folder {
+    grid-row: 1 / 2;
+    grid-column: 2 / 3;
+
+    width: auto;
+    height: auto;
+    background-color: red;
+}
+
+#create-new-folder > p {
+    width: fit-content;
+    background-color: red;
+}
+
+#new-folder-form-wrapper {
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+
+    display: flex;
+    align-items: flex-end;
+    
+}
 
 .drive-option {
     width: 100%;
