@@ -1,4 +1,6 @@
-window.onload = () => {
+
+window.onload = async () => {
+
 
 console.log('this is JS for base drive');
 
@@ -30,7 +32,7 @@ newFolderButton.addEventListener('click', () => {
 
 
 // NEW FOLDER FORM 'CANCEL' BUTTON
-cancelButtonaddEventListener('click', () => {
+cancelButton.addEventListener('click', () => {
     console.log("cancel button clicked");
     popUpView.style.display = "none";
     popUpForm.style.display = "none"
