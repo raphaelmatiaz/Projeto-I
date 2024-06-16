@@ -7,6 +7,7 @@
     <title>DataBox</title>
     <link rel="stylesheet" href="{% static 'user_drive/css/base_drive.css' %}">
     <script src="{% static 'user_drive/js/base_drive.js' %}"></script>
+    <script src="{% static 'user_drive/js/WebComponents.js' %}"></script>
 </head>
 
 <body>
@@ -22,7 +23,7 @@
                 <form id="new-folder-form" action="">
                     <label for="folder-name">Folder Name</label>
                     <input id="folder-name" type="text" placeholder="Enter a folder name">
-                    <div id="cancel-submit-wrapper">
+                    <div id="cancel-submit-wrapper"> 
                         <button id="cancel">Cancel</button>
                         <button id="submit">Submit</button>
                     </div>
@@ -62,7 +63,7 @@
 
 
                 <div id="upload-files" class="drive-option">
-                    <img src="{% static "/media/upload_files.png" %}" alt="">
+                    <img src="{% static '/media/upload_files.png' %}" alt="">
                     <p>Upload Files</p>
                 </div>
         </div>
@@ -72,6 +73,62 @@
         </div>
 
         <div id="drive-view-contents-wrapper">
+            <div class="web-folder-wrapper">
+
+                <div class="subwrapper-1 subwrapper">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <rect width="36" height="36" fill="url(#pattern0_94_382)"/>
+                        <defs>
+                        <pattern id="pattern0_94_382" patternContentUnits="objectBoundingBox" width="1" height="1">
+                        <use xlink:href="#image0_94_382" transform="scale(0.0111111)"/>
+                        </pattern>
+                        <image id="image0_94_382" width="90" height="90" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAYAAAA4qEECAAAACXBIWXMAAAsTAAALEwEAmpwYAAABsklEQVR4nO2csU0DQQAEJwJ6gIgu6IFOwHYPRKYScooAHAEtIAExAokIHXrphRwh/Mi39/4ZaXPfaL3+D3wgIiIiIiIyYg6ABbACPoAyMF/AE3AFnKQP1RpHwOM/5P4m/SJ9uJaavA3JZS1n6UO2wGLLkgvwCRwzcVYVRBfgmonzXkl0AU6ZMLUkl5GmewK7A+bAvqKpIv2hf0Kz0dSRPajZ6a9mGWFmiqaK6FtFU0V096TmdFBHtqJRNJNutIiIiEgd9oBL4KWBR6bSeJ6BZe9sY5YNHKCMLJ2zjbHJbCz6dYjodDvKSKNoFE26hTaavDing7xUNxpFk26cjSYvyekgL9CNpq34woKiSbfQRpMX53SQl+pGo2jSjbPR5CU5HeQFutG0FV9YUDTpFtpo8uKcDvJS3WgUTbpxNpq8JKeDvEA3mrbiCwuKJt1CG01enNNBXqobjaJJN85Gk5fkdLDDG13zOrayI3lr+YLBMvWrfuYNfPAyspwPEb3fXzGW/vBlJLkf+s9Z+kvzlM2fJB8Olbze7Fm/P/5A8iO3c3HTz8XgJouIiIiIiIiIiIgwDb4B6mvZG8Gptm8AAAAASUVORK5CYII="/>
+                        </defs>
+                        </svg>
+                    <p class="folder-name">Folder Name </p>   
+                </div>
+
+                <div class="subwrapper-2 subwrapper">
+                    <div id="download-svg-wrapper">
+                        <svg id="download-svg" class="web-component-icon" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <rect width="36" height="36" fill="url(#pattern0_94_384)"/>
+                            <defs>
+                            <pattern id="pattern0_94_384" patternContentUnits="objectBoundingBox" width="1" height="1">
+                            <use xlink:href="#image0_94_384" transform="scale(0.0111111)"/>
+                            </pattern>
+                            <image id="image0_94_384" width="90" height="90" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAYAAAA4qEECAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEYUlEQVR4nO2dTY9URRSGn2TAwWBw6QyQoAH/gMoKDYQAHRZEXIjJIEZB3GAiamDGnTuBFZmEvwGICwj+AAmBjMCGjYaFaARmwJXdyTBlyhyTsdN1u6en6lTd2+dJTtLpj3vPeVO3Pk9Vg2EYhmEYhmEYhjEwY8B24BhwDrgM3AV+ARaAjtiCvHdXvnNWfvOWXMPowWbgJPAD8BfgVmnPgCvAF8AmRpwXgSPAj8DzCOKGbBG4DnwIrGOEeElK2sOE4obsEfAt8DINZi1wCpjPIHC3eR++Fp8axTvAvQIE7rb7wB4agK8TLwBLBYgaMu/bLDBOTXkVuFGAkG5Auw1so2bsidRNc8rmu4W7qQnvAX8XIJob0vxg6AMK57PEfWKnZD6G4xTKQRkc5BbJRRT7EIXh67V2AeK4BNXIPgrh9Zo2fG4FDeTW3CKPS7fINdxu5e5nX1AMtg2cBjaKTcujrXV/P6jJwk7lEd/pHj5MK97fx/q2tshrgDuKQTpgsocfE8o+3NOeiDqlHKCr8EXbjy8155OfjLDQT0SD5GjWi65AoZ3MZSef9vzdhOYPWYpLxkeZRHYVPuXyZyql0H4h1YTmXw2uphJ5U+ZJoxA5J52SpDKczBiUq/Arp0+fpxDaJ7eY0PxPg4uxRfYpVk9NaLoL2tPY6WfbM5dmV+Fbbr/ejCn0pwUEFCK3X58QkXMFBBQit1/fEZHvCwgohGtSg6g9JepqJPRcTKEfFBBQiNx+/UpESsgADZHbr8dERHNtztVMaL+WaUJTM6Gt6kCn6rDGEJ3GMEX3riPLYhNi033SykJUPdLd1++U3r27nMDB6R732V8h9kqEbsu1upkpfcCSYgg+EbhXK5BfHaLXk3Ig8N1XSh+CH1MUOiR2iEFFRlLJYsfxMYVPk870uWd3NRKiX3WxnG8SxPEGERmT9NWYDrYHEGa52CGGuVYsW0ix7/xKgtLQ6fOoL69GQqzkGsUvZSHbimM76lZQGof57L/PU+1GOEECNiZMN+gMUCqHIVVJdqJFVYO+Kq4nctolEDulyEkTaJBjH1wNxG4p7HWcSp3k+LBwsVsKIidPctRKQu8MKbaGyN6+QoH1MjVYmtgtJZHVEtGRRGynYO0Bum+pu3Dd5ru5qpuFflYKrNOnZGuV5CybhZCtYEuZxW4pirwkW/6yMKsUpJOqYUa2wU3Ka8395+fJyLhs33UNt5vAC2Rma4KZPVeQ+dTc1yiEXTU/dcZVtA17KYx3G3gwyvsUyvGGHPWzKDnhRXOw5tVIu8QjfqqO/nlW04ZvFzVjC/BTAeK5Ae1WCUf6rKafPVuDIzPPl9BPjjVcv1OAqN3mfdpBw1gjh4poTLH2s8cyC+d9aizrJcjfMgj8pxzUvYERYh1wGLiWeKCzKAupU6N29HwvJmUD+yXJ/lmtuAtyrRMpUwLqzpjksx0Fzkg20Jz8Fcj8sr8HmZf35uQ7Z2QXq/+t/T2IYRiGYRiGYRgGA/IPd3ssawSM6QwAAAAASUVORK5CYII="/>
+                            </defs>
+                            </svg>
+                    </div>
+
+                    <div id="delete-svg-wrapper">
+                        <svg id="delete-svg" class="web-component-icon"  width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <rect width="36" height="36" fill="url(#pattern0_94_385)"/>
+                            <defs>
+                            <pattern id="pattern0_94_385" patternContentUnits="objectBoundingBox" width="1" height="1">
+                            <use xlink:href="#image0_94_385" transform="scale(0.0111111)"/>
+                            </pattern>
+                            <image id="image0_94_385" width="90" height="90" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAYAAAA4qEECAAAACXBIWXMAAAsTAAALEwEAmpwYAAACNUlEQVR4nO2aS27UUBBFDwz4bYDvfqIM2AkwJWwCiZ9gRSBGYRcwIqAI6IweeoqJgpX+2P3iqrjPka7Ug/Zr+ai6/OwyiIiIiIiIyMbcAl4C34AyMF+7Y+sasobXIwT382rdj+w614CjBqJ/dGvNhjvAu+7EykxzBLwFbkeK/pBARJko9VxDuA78TiCgTJRf3TkrmpmK3rXW8Z5A6gXiTaOdQkma792WM/RiKCIiIjI9ZaZJR7SQomjCZVnRxIu0dZAj6YgWUhRNuCwrmniRtg5yJB3RQoqiCZdlRRMv0tZBjqQjWkhRNOGyrGhOJZwAz4F7XernxQhBiwvWqWsrmlMJVUif/YGyF90xfQ4UzZmkWn0XsQf82UBUrdrHS9a4q2jWit5E9irJlQeK5kxW/XuvYlkbWdYuzvNC0QwS1pc95pgxSce226iTNS3gfBsZ8l23d4xrBfsTVfJsK7oMqOwpKnn2ossWsltLnr3oMkL2ZUjeCdFlgOzLkqzoHoq2dbTHi+FERO84/uH2jvWSvWHZgCkqec9b8O0kL3yoFDdhafWY1AkL0zz4d8LCNKMsJyysnrC0Gs46YeH/iqyy73c52OJ1g/46vm7A1Ug6ooUURRMuy4omXqStgxxJR7SQomjCZVnRxIu0dZAj6ThOIKU0zk8S8jmBmNI4n0jIswRiSuM8ISE3gS8J5JRGOQRukJRHM5F9CDwkObWyn3b97SpdII+Bj127SFvJIiIiIiIiIiIk4C+afpdItrgk2wAAAABJRU5ErkJggg=="/>
+                            </defs>
+                            </svg>
+                    </div>
+                </div>
+            </div>
+
+            <drive-folder></drive-folder>
+            <drive-folder></drive-folder>
+            <drive-folder></drive-folder>
+            <drive-folder></drive-folder>
+            <drive-folder></drive-folder>
+            <drive-folder></drive-folder>
+            <drive-folder></drive-folder>
+            <drive-folder></drive-folder>
+            <drive-folder></drive-folder>
+            <drive-folder></drive-folder>
+            <drive-folder></drive-folder>
+            <drive-folder></drive-folder>
+
+                
         </div>
 
     </div>
