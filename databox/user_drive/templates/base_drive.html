@@ -20,7 +20,7 @@
                 <p >Create New Folder</p>
             </div>
             <div id="new-folder-form-wrapper">
-                <form id="new-folder-form" action="">
+                <form id="new-folder-form" method="POST" action="{% url 'create_folder' %}" {% csrf_token %}>
                     <label for="folder-name">Folder Name</label>
                     <input id="folder-name" type="text" placeholder="Enter a folder name">
                     <div id="cancel-submit-wrapper"> 
@@ -75,17 +75,7 @@
         <div id="drive-view-contents-wrapper">
 
             <drive-folder></drive-folder>
-            <drive-folder></drive-folder>
-            <drive-folder></drive-folder>
-            <drive-folder></drive-folder>
-            <drive-folder></drive-folder>
-            <drive-folder></drive-folder>
-            <drive-folder></drive-folder>
-            <drive-folder></drive-folder>
-            <drive-folder></drive-folder>
-            <drive-folder></drive-folder>
-            <drive-folder></drive-folder>
-            <drive-folder></drive-folder>
+            <drive-file></drive-file>
 
                 
         </div>
