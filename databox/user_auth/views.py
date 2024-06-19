@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import RegisterForm
 from .forms import LoginForm
+from user_drive.models import Drive
 
 # Landing Page.
 def show_landing_page(request):
@@ -16,8 +17,9 @@ def show_register_user(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
+            Drive.objects.create(user=user)
             print("User created and logged in:", user)  # Debugging line
-            return redirect('base__drive')  # Redirect to a success page
+            return redirect('login')  # Redirect to a success page
         else:
             print("Form is not valid:", form.errors)  # Debugging line
     else:

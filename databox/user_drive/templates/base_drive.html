@@ -20,9 +20,10 @@
                 <p >Create New Folder</p>
             </div>
             <div id="new-folder-form-wrapper">
-                <form id="new-folder-form" method="POST" action="{% url 'create_folder' %}" {% csrf_token %}>
+                <form id="new-folder-form" method="POST" action="{% url 'create_folder' %}">
+                    {% csrf_token %}
                     <label for="folder-name">Folder Name</label>
-                    <input id="folder-name" type="text" placeholder="Enter a folder name">
+                    <input id="folder-name" type="text" placeholder="Enter a folder name" name="name" required>
                     <div id="cancel-submit-wrapper"> 
                         <button id="cancel">Cancel</button>
                         <button id="submit">Submit</button>
@@ -43,7 +44,9 @@
         </div>
 
         <div id="user-options-wrapper">
-            <p id="user-greet">Hello, User</p>
+            <div id="user-greet">
+                <p>Welcome, {{user.username}}</p>
+            </div>
             <div class="dropdown">
                 <img id="profile-icon" src="{% static '/media/user_profile.png' %}" alt="">
                 <div class="dropdown-content">
@@ -73,9 +76,13 @@
         </div>
 
         <div id="drive-view-contents-wrapper">
-
             <drive-folder></drive-folder>
             <drive-file></drive-file>
+            <ul>
+                {% for folder in folders.all %}
+                <drive-folder></drive-folder>
+                {% endfor %}
+              </ul>
 
                 
         </div>

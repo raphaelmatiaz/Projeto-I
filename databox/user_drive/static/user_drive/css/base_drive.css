@@ -315,6 +315,9 @@ display: block;
   
  #user-greet {
     margin-right: 4vw;
+    width: fit-content;
+    max-height: fit-content;
+    display: flex;
  }
 
   /* Dropdown Content (Hidden by Default) */
