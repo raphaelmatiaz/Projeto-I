@@ -11,8 +11,10 @@ def show_base_drive(request):
     if user.is_staff:
         return redirect('admin:login')
     else:
-        folders = Drive.objects.filter(user=request.user).prefetch_related('folders')
-        return render(request, 'base_drive.html', context={'folders': folders})
+        user = request.user
+        folders = user.drive.folder_set.all()
+        context = {'folders': folders}
+        return render(request, 'base_drive.html', context)
 
 # # Create a new Folder (VERSAO ANTIGA)
 # def create_folder(request):

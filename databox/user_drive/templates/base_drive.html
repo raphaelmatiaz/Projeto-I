@@ -80,8 +80,14 @@
         </div>
 
         <div id="drive-view-contents-wrapper">
-            <drive-folder></drive-folder>
-            <drive-file></drive-file>  
+            <ul>
+                {% for folder in folders %}
+                    <li>
+                        <drive-folder data-folder-id="{{ folder.id }}" data-folder-name="{{ folder.name }}">
+                        </drive-folder>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
 
     </div>

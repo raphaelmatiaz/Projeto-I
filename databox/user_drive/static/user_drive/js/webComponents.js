@@ -1,9 +1,9 @@
 
 
 
-const Foldertemplate = document.createElement('template');
-
 console.log('This is JS from WebComponents')
+
+const Foldertemplate = document.createElement('template');
 
 Foldertemplate.innerHTML = `
 
@@ -22,7 +22,7 @@ Foldertemplate.innerHTML = `
                             </defs>
                             </svg>
                     </div>
-                    <p class="folder-name">Folder Name </p>   
+                    <p class="folder-name" data-folder-name=""></p>   
                 </div>
 
                 <div class="subwrapper-2 subwrapper">
@@ -118,6 +118,10 @@ Foldertemplate.innerHTML = `
     scale: 1.04;
     cursor: pointer;
 }
+
+.folder-name {
+    margin: 1.832vh;
+}
 </style>
 
 
@@ -125,6 +129,7 @@ Foldertemplate.innerHTML = `
 
 class DriveFolder extends HTMLElement {
 
+    
     shadowRoot = null;
 
     constructor() {
@@ -133,9 +138,30 @@ class DriveFolder extends HTMLElement {
         this.shadowRoot = this.attachShadow({ mode: 'closed' });
         this.shadowRoot.appendChild(Foldertemplate.content.cloneNode(true));
         
+        const folderName = this.getAttribute('data-folder-name');
+
         
     }
+
+    connectedCallback() {
+        const folderName = this.getAttribute('data-folder-name');
+        const folderNameText = this.shadowRoot.querySelector('.folder-name');
     
+        // Check if element exists before setting content
+        if (folderNameText) {
+          folderNameText.textContent = folderName;
+        } else {
+          // Schedule a check for the element with a slight delay
+          const self = this;  // Store reference to 'this' for callback
+          setTimeout(function() {
+            const folderNameText = self.shadowRoot.querySelector('.folder-name');
+            if (folderNameText) {
+              folderNameText.textContent = folderName;
+            }
+          }, 0);  // Schedule with minimal delay
+        }
+      }
+
 }
 customElements.define('drive-folder', DriveFolder)
 
@@ -164,7 +190,7 @@ Filetemplate.innerHTML = `
                 </svg>
 
         </div>
-        <p class="folder-name">Folder Name </p>   
+        <p class="folder-name">File Name </p>   
     </div>
 
     <div class="subwrapper-2 subwrapper">
@@ -266,7 +292,7 @@ Filetemplate.innerHTML = `
 `
 
 class DriveFile extends HTMLElement {
-
+    
     shadowRoot = null;
 
     constructor() {
