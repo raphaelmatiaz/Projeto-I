@@ -5,34 +5,71 @@ window.onload = async () => {
 console.log('this is JS for base drive');
 
 // CONSTANTS
+
+// buttons
 const newFolderButton = document.querySelector('#new-folder');
+const uploadFilesBTN = document.querySelector('#upload-files-button');
+const newFolderCancelBTN = document.querySelector('#cancel-new-folder');
+const uploadFilesCancelBTN = document.querySelector('#cancel-file-upload');
+
+// views
 const popUpView = document.querySelector('#pop-up-view');
-const popUpForm = document.querySelector('#create-new-folder-wrapper');
-const cancelButton = document.querySelector('#cancel');
+const newFolderForm = document.querySelector('#create-new-folder-wrapper');
+const uploadFilesForm = document.querySelector('#upload-file-wrapper')
 
 
 // 'NEW FOLDER' BUTTON 
 newFolderButton.addEventListener('click', () => {
     console.log("button clicked");
     popUpView.style.display = "flex";
-    popUpForm.style.display = "flex"
+    newFolderForm.style.display = "flex"
     popUpView.setAttribute('active', 'True');
-    popUpForm.setAttribute('active', 'True');
+    newFolderForm.setAttribute('active', 'True');
 
     popUpView.addEventListener('click', () => {
         popUpView.style.display = "none";
-        popUpForm.style.display = "none"
+        newFolderForm.style.display = "none"
         popUpView.setAttribute('active', 'False');
-        popUpForm.setAttribute('active', 'False');
+        newFolderForm.setAttribute('active', 'False');
     })
 });
 
 // 'UPLOAD FILES' BUTTON 
+uploadFilesBTN.addEventListener('click', () => {
+    console.log("button clicked");
+    popUpView.style.display = "flex";
+    uploadFilesForm.style.display = "flex"
+    popUpView.setAttribute('active', 'True');
+    uploadFilesForm.setAttribute('active', 'True');
 
+    popUpView.addEventListener('click', () => {
+        popUpView.style.display = "none";
+        uploadFilesForm.style.display = "none"
+        popUpView.setAttribute('active', 'False');
+        uploadFilesForm.setAttribute('active', 'False');
+    })
+});
 
 
 // NEW FOLDER FORM 'CANCEL' BUTTON
-cancelButton.addEventListener('click', () => {
+newFolderCancelBTN.addEventListener('click', () => {
+    console.log("cancel button clicked");
+    popUpView.style.display = "none";
+    newFolderForm.style.display = "none"
+    popUpView.setAttribute('active', 'False');
+    newFolderForm.setAttribute('active', 'False');
+});
+
+
+// NEW FOLDER FORM 'SUBMIT' BUTTON
+
+
+
+
+
+
+// UPLOAD FILE 'CANCEL' BUTTON
+uploadFilesCancelBTN.addEventListener('click', () => {
     console.log("cancel button clicked");
     popUpView.style.display = "none";
     popUpForm.style.display = "none"
@@ -40,6 +77,4 @@ cancelButton.addEventListener('click', () => {
     popUpForm.setAttribute('active', 'False');
 });
 
-
-// NEW FOLDER FORM 'SUBMIT' BUTTON
 }

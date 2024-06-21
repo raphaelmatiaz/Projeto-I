@@ -1,20 +1,34 @@
-from django.shortcuts import render, redirect
-# from .forms import NewFolderForm
-from .forms import New_Folder_Form
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import New_Folder_Form, FileForm
 from .models import Folder, File, Drive
+from django.urls.base import reverse
+from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 
 
-# Create your views here.
+# LOAD THE USER DRIVE UI
 def show_base_drive(request):
-    user=request.user
-     # get outta here staff user!
-    if user.is_staff:
-        return redirect('admin:login')
-    else:
+
+    # # Verificar se user é 'Anonymous User'
+    # user = get_user_model
+    # if not request.user.is_authenticated:
+    # # User is anonymous
+    #     return redirect(request, 'landing__page')
+    
+    # else:
         user = request.user
-        folders = user.drive.folder_set.all()
-        context = {'folders': folders}
-        return render(request, 'base_drive.html', context)
+
+        # Verificar se é 'Staff User'. Se for: Get outta here staff user!
+        if user.is_staff:
+            return redirect('admin:login')
+    
+        else:
+            user = request.user
+            folders = user.drive.folder_set.all()
+            print(f"{user}'s Folders: {folders}")
+            context = {'folders': folders}
+            print(f"Context: {context}")
+            return render(request,'base_drive.html', context)
 
 # # Create a new Folder (VERSAO ANTIGA)
 # def create_folder(request):
@@ -35,7 +49,7 @@ def show_base_drive(request):
 #     context = {'form': form}
 #     return render(request, 'base_drive.html', context)
 
-
+# CREATE A NEW FOLDER
 def create_folder(request):
     print('create_folder called')
     if request.method == 'POST':
@@ -51,16 +65,15 @@ def create_folder(request):
         if form.is_valid():
             print('Form is Valid')
             folder = form.save(commit=False)  # Create the Folder instance without saving yet
-            print('Created Folder instance without saving yey')
+            print('Created Folder instance without saving yet')
             folder.drive = user_drive  # Explicitly assign the user's Drive
             print('Explicitly assign user Drive')
             folder.save()  # Save the Folder instance
-
-            return render(request,'base_drive.html', {'message': 'Folder created successfully!'})
     else:
         form = New_Folder_Form()  # Create an empty form for GET requests
         # context = {'form': form, 'message': 'Folder created successfully!'}  # Example context
-    return render(request, 'base_drive.html') #, {'form': form}
+
+    return redirect('base__drive')
 
 
 # LIST FOLDERS IN CURRENT USER'S DRIVE
@@ -68,4 +81,29 @@ def list_user_folders(request):
     user = request.user
     folders = user.drive.folder_set.all()
     context = {'folders': folders}
-    return render('list_folders.html', context)
+    return render(request, 'base_drive.html', context)
+
+# HANDLE FILE UPLOAD
+@login_required
+def upload_file(request):
+    user = request.user
+    drive: Drive | None = Drive.objects.filter(
+        user=user,
+    ).first()
+
+    if not drive:
+        raise ValueError("Drive nao encontrado")
+
+    if request.method == 'POST':
+        form = FileForm(request.POST, request.FILES)
+        if form.is_valid():
+            new_file = form.save(commit=False)  # Don't save immediately
+            new_file.drive = drive  # Assign the Drive instance
+            new_file.save()  # Now save the File model with Drive association
+            return redirect('success_url')  # Replace 'success_url' with your success page URL
+    else:
+        form = FileForm()
+
+    context = {'form': form, 'drive': drive}
+    return render(request, 'base_drive.html', context)
+

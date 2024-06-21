@@ -77,11 +77,11 @@ Foldertemplate.innerHTML = `
     padding: 0 1vw 0 1vw;
     background: var(--color-grey-1);
     border: 1px  solid var(--color-dark);
-    transition: border 0.08s ease-in-out, box-shadow 0.2s ease-in-out;
+    
 }
 
 .web-folder-wrapper:hover {
-    border: 1px solid var(--color-grey-2);
+    border: 1px solid var(--color-primary);
     box-shadow: 1px 1px 5px var(--color-grey-2) inset;
     cursor: pointer;
     

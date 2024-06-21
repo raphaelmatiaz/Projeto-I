@@ -28,7 +28,7 @@
                     <label for="folder-name">Folder Name</label>
                     <input id="folder-name" type="text" placeholder="Enter a folder name" name="name" required>
                     <div id="cancel-submit-wrapper"> 
-                        <button id="cancel">Cancel</button>
+                        <button id="cancel-new-folder">Cancel</button>
                         <button id="submit">Submit</button>
                     </div>
                 </form>
@@ -36,13 +36,36 @@
 
         </div>
     </div>
+
+    <div id="upload-file-wrapper">
+        <div id="upload-file-wrapper-grid">
+            <div id="upload-files">
+                <p >Select Files to Upload</p>
+            </div>
+
+            <div id="upload-file-form-wrapper">
+                <form id="new-folder-form" method="POST" action="{% url 'upload_file'%}">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="hidden" name="drive" value="{{ user.drive.id }}">
+                    <button id="browse-files">Browse Files</button>
+                    <div id="cancel-submit-wrapper"> 
+                        <button id="cancel-file-upload">Upload</button>
+                        <button type="submit" id="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
     <div id="ui-wrapper">
 
         
         
 
         <div id="logo-wrapper">
-            <a href="{% url 'base__drive'%}">
+            <a href="{% url 'base__drive' %}">
                 <img id="logo-img" src="{% static '/media/logo.png' %}" alt="">
             </a>
         </div>
@@ -69,7 +92,7 @@
                 </div>
 
 
-                <div id="upload-files" class="drive-option">
+                <div id="upload-files-button" class="drive-option">
                     <img src="{% static '/media/upload_files.png' %}" alt="">
                     <p>Upload Files</p>
                 </div>
