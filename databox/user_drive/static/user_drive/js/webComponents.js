@@ -81,9 +81,11 @@ Foldertemplate.innerHTML = `
 }
 
 .web-folder-wrapper:hover {
-    border: 1px solid var(--color-primary);
-    box-shadow: 1px 1px 5px var(--color-grey-2) inset;
+    border: 1px solid var(--color-secondary);
+    background-color: var(--color-primary)
+    box-shadow: 1px 1px 5px var(--color-grey-2);
     cursor: pointer;
+    color: var(--color-light);
     
 }
 
@@ -190,7 +192,7 @@ Filetemplate.innerHTML = `
                 </svg>
 
         </div>
-        <p class="folder-name">File Name </p>   
+        <p class="file-name" data-file-id="" data-file-name=""></p>   
     </div>
 
     <div class="subwrapper-2 subwrapper">
@@ -249,9 +251,10 @@ Filetemplate.innerHTML = `
 }
 
 .web-folder-wrapper:hover {
-    border: 1px solid var(--color-grey-2);
-    box-shadow: 1px 1px 5px var(--color-grey-2) inset;
-    cursor: pointer;
+    border: 1px solid var(--color-secondary);
+    background-color: var(--color-primary)
+    box-shadow: 1px 1px 5px var(--color-grey-2);
+    color: var(--color-light);
     
 }
 
@@ -285,6 +288,11 @@ Filetemplate.innerHTML = `
 .web-component-icon:hover {
     scale: 1.04;
     cursor: pointer;
+
+
+.file-name {
+    margin: 1.832vh;
+}
 }
 </style>
 
@@ -302,7 +310,39 @@ class DriveFile extends HTMLElement {
         this.shadowRoot.appendChild(Filetemplate.content.cloneNode(true));
         
         
+        const deleteSvg = document.querySelector("#delete-svg");
+        const downloadSvg = document.querySelector("#delete-svg");
+
+
+
+        // Comportamento Download e Delete
+        // deleteSvg.addEventListener('click', () => {
+
+        // })
+
+        // downloadSvg.addEventListener('click', () => {
+            
+        // })
     }
     
+    connectedCallback() {
+        const fileName = this.getAttribute('data-file-name');
+        const fileNameText = this.shadowRoot.querySelector('.file-name');
+    
+        // Check if element exists before setting content
+        if (fileNameText) {
+          fileNameText.textContent = fileName;
+        } else {
+          // Schedule a check for the element with a slight delay
+          const self = this;  // Store reference to 'this' for callback
+          setTimeout(function() {
+            const fileNameText = self.shadowRoot.querySelector('.file-name');
+            if (fileNameText) {
+              fileNameText.textContent = fileName;
+            }
+          }, 0);  // Schedule with minimal delay
+        }
+      }
+
 }
 customElements.define('drive-file', DriveFile)

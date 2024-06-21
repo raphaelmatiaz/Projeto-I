@@ -26,7 +26,10 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include('user_auth.urls')),
     path("drive/", include('user_drive.urls'))
-]
+] 
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+

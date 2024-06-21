@@ -23,12 +23,12 @@
             <div id="new-folder-form-wrapper">
                 <form id="new-folder-form" method="POST" action="{% url 'create_folder' %}">
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    
                     <input type="hidden" name="drive" value="{{ user.drive.id }}">
                     <label for="folder-name">Folder Name</label>
                     <input id="folder-name" type="text" placeholder="Enter a folder name" name="name" required>
-                    <div id="cancel-submit-wrapper"> 
-                        <button id="cancel-new-folder">Cancel</button>
+                    <div class="cancel-submit-wrapper"> 
+                        <button id="cancel">Cancel</button>
                         <button id="submit">Submit</button>
                     </div>
                 </form>
@@ -40,22 +40,26 @@
     <div id="upload-file-wrapper">
         <div id="upload-file-wrapper-grid">
             <div id="upload-files">
-                <p >Select Files to Upload</p>
+                <p >Upload Files</p>
             </div>
-
-            <div id="upload-file-form-wrapper">
-                <form id="new-folder-form" method="POST" action="{% url 'upload_file'%}">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <input type="hidden" name="drive" value="{{ user.drive.id }}">
-                    <button id="browse-files">Browse Files</button>
-                    <div id="cancel-submit-wrapper"> 
-                        <button id="cancel-file-upload">Upload</button>
-                        <button type="submit" id="submit">Submit</button>
+            <form id="file-upload-form" enctype="multipart/form-data" method="POST" action="{% url 'upload_file' %}"> 
+                {% csrf_token %}
+                {{ form.file }}
+                <!-- <div id="browse-files-wrapper">
+                    <input  type="hidden"><button id="browse-files-button">Browse Files</button></input>
+                    <div id="selected-file-wrapper">
+                        <p>Selected File:</p>
+                        <p>None</p>
                     </div>
-                </form>
-            </div>
+                </div> -->
 
+                <div class="cancel-submit-wrapper" id="cancel-submit-file-upload-buttons"> 
+                    <button id="cancel-file-upload">Cancel</button>
+                    <button type="submit" id="submit">Submit</button>
+                </div>
+            </form>
+            
+ 
         </div>
     </div>
 
@@ -109,6 +113,12 @@
                         <drive-folder data-folder-id="{{ folder.id }}" data-folder-name="{{ folder.name }}">
                         </drive-folder>
                     </li>
+                {% endfor %}
+                {% for file in files %}
+                <li>
+                    <drive-file data-file-id="{{ file.id }}" data-file-name="{{ file.name }}">
+                    </drive-file>
+                </li>
                 {% endfor %}
             </ul>
         </div>

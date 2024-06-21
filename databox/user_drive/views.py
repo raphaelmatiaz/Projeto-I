@@ -25,8 +25,11 @@ def show_base_drive(request):
         else:
             user = request.user
             folders = user.drive.folder_set.all()
+            files = user.drive.file_set.all()
+            
             print(f"{user}'s Folders: {folders}")
-            context = {'folders': folders}
+            form = FileForm()
+            context = {'folders': folders, 'form': form, 'files': files}
             print(f"Context: {context}")
             return render(request,'base_drive.html', context)
 
@@ -58,7 +61,7 @@ def create_folder(request):
         print(f"Current user is {user}")
         user_drive = user.drive  # Access the associated Drive instance
         print(f"{user}'s Drive is {user_drive}")
-        form = New_Folder_Form(request.POST)  # Pass the user's Drive
+        form = New_Folder_Form(request.POST,)  # Pass the user's Drive
         print("Form Created")
         print(f"Form: {form}")
 
@@ -89,20 +92,21 @@ def upload_file(request):
     user = request.user
     drive: Drive | None = Drive.objects.filter(
         user=user,
-    ).first()
+    ).first() # ir buscar a drive do user que fêz o request
 
     if not drive:
         raise ValueError("Drive nao encontrado")
+    form = FileForm()
 
     if request.method == 'POST':
         form = FileForm(request.POST, request.FILES)
         if form.is_valid():
             new_file = form.save(commit=False)  # Don't save immediately
             new_file.drive = drive  # Assign the Drive instance
+            new_file.name = new_file.file.name
             new_file.save()  # Now save the File model with Drive association
-            return redirect('success_url')  # Replace 'success_url' with your success page URL
-    else:
-        form = FileForm()
+            return redirect('base__drive')  # Replace 'success_url' with your success page URL
+   
 
     context = {'form': form, 'drive': drive}
     return render(request, 'base_drive.html', context)

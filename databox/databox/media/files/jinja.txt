@@ -1,0 +1,13 @@
+usar o jinja para linkar o webcomponent
+
+
+context em views do putyon
+
+o jinja serve para 
+
+
+passar valors da db em argumentos para o construtor do webcomponent, para que seja criado diretamente com aquele valor. Expecificamente o nome do folder ou file.
+
+login 
+
+criar field no modelo do folder a lincar com uma drive 

@@ -77,4 +77,15 @@ uploadFilesCancelBTN.addEventListener('click', () => {
     popUpForm.setAttribute('active', 'False');
 });
 
+
+// FORMS
+const fileUploadForm = document.getElementById('file-upload-form');
+// fileUploadForm.addEventListener('submit', (event) => {
+//     const hasFile = document.getElementById('browse-files-button').files.length > 0;
+//     if (!hasFile) {
+//       alert("Please select a file to upload.");
+//       event.preventDefault(); // Prevent form submission
+//     }
+// });
+
 }
