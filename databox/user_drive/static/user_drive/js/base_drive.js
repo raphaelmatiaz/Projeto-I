@@ -52,13 +52,13 @@ uploadFilesBTN.addEventListener('click', () => {
 
 
 // NEW FOLDER FORM 'CANCEL' BUTTON
-newFolderCancelBTN.addEventListener('click', () => {
-    console.log("cancel button clicked");
-    popUpView.style.display = "none";
-    newFolderForm.style.display = "none"
-    popUpView.setAttribute('active', 'False');
-    newFolderForm.setAttribute('active', 'False');
-});
+// newFolderCancelBTN.addEventListener('click', () => {
+//     console.log("cancel button clicked");
+//     popUpView.style.display = "none";
+//     newFolderForm.style.display = "none"
+//     popUpView.setAttribute('active', 'False');
+//     newFolderForm.setAttribute('active', 'False');
+// });
 
 
 // NEW FOLDER FORM 'SUBMIT' BUTTON

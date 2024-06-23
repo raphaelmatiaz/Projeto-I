@@ -69,7 +69,7 @@
         
 
         <div id="logo-wrapper">
-            <a href="{% url 'base__drive' %}">
+            <a href="{% url 'home_drive' %}">
                 <img id="logo-img" src="{% static '/media/logo.png' %}" alt="">
             </a>
         </div>
@@ -107,20 +107,9 @@
         </div>
 
         <div id="drive-view-contents-wrapper">
-            <ul>
-                {% for folder in folders %}
-                    <li>
-                        <drive-folder data-folder-id="{{ folder.id }}" data-folder-name="{{ folder.name }}">
-                        </drive-folder>
-                    </li>
-                {% endfor %}
-                {% for file in files %}
-                <li>
-                    <drive-file data-file-id="{{ file.id }}" data-file-name="{{ file.name }}">
-                    </drive-file>
-                </li>
-                {% endfor %}
-            </ul>
+            {% block content %}
+
+            {% endblock  %}
         </div>
 
     </div>

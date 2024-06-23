@@ -1,0 +1,29 @@
+{% extends 'base_drive.html' %}  
+
+{% block content %}
+    <ul>
+
+        {% for folder in folders %}
+
+            <li>
+                <a href="{% url 'current_folder' folder.id %}">
+                {% comment %} <a href="{% url 'current_folder' folder.id file.id %}"> {% endcomment %}
+                    <drive-folder data-folder-name="{{ folder.name }}">
+                    </drive-folder>
+                </a>
+            </li>
+
+        {% endfor %}
+
+        {% for file in files %}
+
+        <li>
+            <drive-file data-file-id="{{ file.id }}" data-file-name="{{ file.name }}">
+            </drive-file>
+        </li>
+
+        {% endfor %}
+
+    </ul>
+
+{% endblock %}

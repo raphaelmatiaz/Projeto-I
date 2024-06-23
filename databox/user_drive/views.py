@@ -4,53 +4,30 @@ from .models import Folder, File, Drive
 from django.urls.base import reverse
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-
+from django.http import HttpResponse
 
 # LOAD THE USER DRIVE UI
-def show_base_drive(request):
+def show_home_drive(request):
 
-    # # Verificar se user é 'Anonymous User'
-    # user = get_user_model
-    # if not request.user.is_authenticated:
-    # # User is anonymous
-    #     return redirect(request, 'landing__page')
-    
-    # else:
+    user = request.user
+
+    # Verificar se é 'Staff User'. Se for: Get outta here staff user!
+    if user.is_staff:
+        return redirect('admin:login')
+
+    else:
         user = request.user
+        folders = user.drive.folder_set.all()
+        files = user.drive.file_set.all()
+        
+        print(f"{user}'s Folders: {folders}")
+        form = FileForm()
+        context = {'folders': folders, 'form': form, 'files': files}
+        print(f"Context: {context}")
+        print(f"Context is: {context}")
+        return render(request,'home_drive.html', context)
 
-        # Verificar se é 'Staff User'. Se for: Get outta here staff user!
-        if user.is_staff:
-            return redirect('admin:login')
-    
-        else:
-            user = request.user
-            folders = user.drive.folder_set.all()
-            files = user.drive.file_set.all()
-            
-            print(f"{user}'s Folders: {folders}")
-            form = FileForm()
-            context = {'folders': folders, 'form': form, 'files': files}
-            print(f"Context: {context}")
-            return render(request,'base_drive.html', context)
 
-# # Create a new Folder (VERSAO ANTIGA)
-# def create_folder(request):
-   
-#     if request.method == 'POST':
-#         print("request method is POST")
-#         form = NewFolderForm(request.POST, user=request.user)
-#         print(f"Request object is {request}")
-#         if form.is_valid():
-#             print("form is VALID")
-#             print(f"Form object is {form}")
-#             # folder = Folder(name=request.POST['name'])
-#             form.save()
-#             return redirect('base__drive')  
-#     else:
-#         form = NewFolderForm()
-
-#     context = {'form': form}
-#     return render(request, 'base_drive.html', context)
 
 # CREATE A NEW FOLDER
 def create_folder(request):
@@ -111,3 +88,17 @@ def upload_file(request):
     context = {'form': form, 'drive': drive}
     return render(request, 'base_drive.html', context)
 
+
+
+def open_folder(request, folder_id):
+
+    folder = Folder.objects.get(pk=folder_id)
+    folders = folder.name.all()
+    files = folder.file_set.all()
+    context = {'folders': folders, 'files': files}
+    return render(request, 'current_folder.html')
+
+
+def trigger_view(request):
+    # This view can later process data sent from the component
+    return HttpResponse('View Triggered!')
