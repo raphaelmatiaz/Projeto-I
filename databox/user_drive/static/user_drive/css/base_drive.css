@@ -36,6 +36,12 @@ body {
     padding: 2vw
 }
 
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
 /*IDS*/
 
 #ui-wrapper {
@@ -416,24 +422,24 @@ form label {
 }
 
 .dropdown {
-position: relative;
-display: inline-block;
-width: 4vw;
-height: auto;
+    position: relative;
+    display: inline-block;
+    width: 4vw;
+    height: auto;
 }
 
 #profile-icon {
-max-width: 100%;
-max-height: 100%;
-display: block;
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
 }
   
- #user-greet {
+#user-greet {
     margin-right: 4vw;
     width: fit-content;
     max-height: fit-content;
     display: flex;
- }
+}
 
   /* Dropdown Content (Hidden by Default) */
   .dropdown-content {

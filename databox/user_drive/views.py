@@ -7,10 +7,9 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from typing import Optional
 
-# Os folders TODOS estao a ser renderizados para a drive. Nunhum nested folder está a ser renderizado dentro do folder pai
-
 
 # LOAD THE USER DRIVE UI
+@login_required(login_url='/')
 def show_home_drive(request):
 
     user = request.user
@@ -34,6 +33,7 @@ def show_home_drive(request):
 
 
 # CREATE A NEW FOLDER
+@login_required(login_url='/')
 def create_folder(request):
     print('create_folder called')
     if request.method == 'POST':
@@ -87,6 +87,7 @@ def create_folder(request):
 
 
 # LIST FOLDERS IN CURRENT USER'S DRIVE
+@login_required(login_url='/')
 def list_user_folders(request):
     user = request.user
     folders = user.drive.folder_set.all()
@@ -123,7 +124,8 @@ def upload_file(request):
 def open_folder(request, folder_id):
 
     
-    nested_folders = []
+    # nested_folders = []
+    form = FileForm()
     user = request.user
     all_folders = Folder.objects.filter(drive=user.drive, parent=folder_id).all()
     # print(f"All folders")
@@ -137,7 +139,7 @@ def open_folder(request, folder_id):
     # target_folder = Folder.objects.get(pk=folder_id)
     # # subfolders = target_folder.subfolders.all()
     # print(f"subfolders from {target_folder.name} are {nested_folders}")
-    context = {'parent_folder': folder_id,'folders': all_folders}
+    context = {'form': form, 'parent_folder': folder_id,'folders': all_folders}
     return render(request, 'current_folder.html', context)
 
 
