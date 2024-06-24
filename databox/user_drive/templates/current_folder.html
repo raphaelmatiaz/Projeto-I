@@ -6,12 +6,14 @@
         {% for folder in folders %}
 
             <li>
-                <a href="{% url 'current_folder' folder.id %}">
-                {% comment %} <a href="{% url 'current_folder' folder.id file.id %}"> {% endcomment %}
+                <a href="{% url 'open_folder' subfolder.id subfolder.name %}">
                     <drive-folder data-folder-name="{{ folder.name }}">
                     </drive-folder>
                 </a>
             </li>
+                
+                    
+                {% comment %} <a href="{% url 'current_folder' folder.id file.id %}"> {% endcomment %}
 
         {% endfor %}
 

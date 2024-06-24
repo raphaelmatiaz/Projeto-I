@@ -4,23 +4,23 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Drive(models.Model):
-    user = models.OneToOneField(
-        User, 
-        on_delete=models.CASCADE,
-    )
-    # files = models.ForeignKey('File', blank=True, null=True, default=None, on_delete=models.SET_DEFAULT)
-    # folders = models.ForeignKey('Folder', blank=True, null=True, default=None, on_delete=models.SET_DEFAULT)
+    user = models.OneToOneField(User, on_delete=models.CASCADE,)
+
 
 class Folder(models.Model):
     name = models.CharField(max_length=50, unique=True)  
-    parent = models.ForeignKey('Folder', blank=True, null=True, on_delete=models.CASCADE)
+    parent = models.ForeignKey('Folder', related_name="subfolders", blank=True, null=True, on_delete=models.CASCADE)
     drive = models.ForeignKey(Drive, on_delete=models.CASCADE)
+
+    # children = models.Manager()  # Default manager for accessing children
 
 
 class File(models.Model):
     name = models.CharField(max_length=50)
     file = models.FileField(upload_to='files/')
     drive = models.ForeignKey('Drive', on_delete=models.CASCADE)
+
+    # folder = models.ForeignKey('Folder', related_name='files', on_delete=models.CASCADE)  # Add related_name
 
 
 

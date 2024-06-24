@@ -5,6 +5,7 @@ from django.urls.base import reverse
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from typing import Optional
 
 # LOAD THE USER DRIVE UI
 def show_home_drive(request):
@@ -53,7 +54,7 @@ def create_folder(request):
         form = New_Folder_Form()  # Create an empty form for GET requests
         # context = {'form': form, 'message': 'Folder created successfully!'}  # Example context
 
-    return redirect('base__drive')
+    return redirect('home_drive')
 
 
 # LIST FOLDERS IN CURRENT USER'S DRIVE
@@ -61,7 +62,7 @@ def list_user_folders(request):
     user = request.user
     folders = user.drive.folder_set.all()
     context = {'folders': folders}
-    return render(request, 'base_drive.html', context)
+    return render(request, 'home_drive.html', context)
 
 # HANDLE FILE UPLOAD
 @login_required
@@ -82,7 +83,7 @@ def upload_file(request):
             new_file.drive = drive  # Assign the Drive instance
             new_file.name = new_file.file.name
             new_file.save()  # Now save the File model with Drive association
-            return redirect('base__drive')  # Replace 'success_url' with your success page URL
+            return redirect('home_drive')  # Replace 'success_url' with your success page URL
    
 
     context = {'form': form, 'drive': drive}
@@ -91,12 +92,11 @@ def upload_file(request):
 
 
 def open_folder(request, folder_id):
-
-    folder = Folder.objects.get(pk=folder_id)
-    folders = folder.name.all()
-    files = folder.file_set.all()
-    context = {'folders': folders, 'files': files}
-    return render(request, 'current_folder.html')
+    target_folder = Folder.objects.get(pk=folder_id)
+    subfolders = target_folder.subfolders.all()
+    print(f"subfolders from {target_folder.name} are {subfolders}")
+    context = {'subfolders': subfolders}
+    return render(request, 'current_folder.html', context)
 
 
 def trigger_view(request):

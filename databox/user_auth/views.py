@@ -54,7 +54,7 @@ def show_login_user(request):
                 
                 else:
                     login(request, user)
-                    return redirect('base__drive')
+                    return redirect('home_drive')
         else:
             print("Form is not valid:", form.errors)  # Debugging line
     else:
