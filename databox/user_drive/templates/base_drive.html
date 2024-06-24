@@ -45,6 +45,8 @@
             </div>
             <form id="file-upload-form" enctype="multipart/form-data" method="POST" action="{% url 'upload_file' %}"> 
                 {% csrf_token %}
+                <input type="hidden" name="drive" value="{{ user.drive.id }}">
+                <input type="hidden" name="folder" value="{{ parent_folder }}">
                 {{ form.file }}
                 <!-- <div id="browse-files-wrapper">
                     <input  type="hidden"><button id="browse-files-button">Browse Files</button></input>

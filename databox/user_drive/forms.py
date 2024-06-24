@@ -9,10 +9,12 @@ class New_Folder_Form(forms.ModelForm):
         fields = ['name', 'parent', 'drive']
 
 
+#added 'parent'
 class FileForm(forms.ModelForm):
+
     class Meta:
         model = File
-        fields = ['file']
+        fields = ['file', 'folder', 'drive']
         widgets = {
             'file': forms.FileInput(attrs={'id': 'browse-files-button', 'class':'cenas'},
             )

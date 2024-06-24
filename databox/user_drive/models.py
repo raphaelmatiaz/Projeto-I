@@ -10,7 +10,7 @@ class Drive(models.Model):
 class Folder(models.Model):
     name = models.CharField(max_length=50, unique=True)  
     parent = models.ForeignKey('Folder', related_name="subfolders", blank=True, null=True, on_delete=models.CASCADE)
-    drive = models.ForeignKey(Drive, on_delete=models.CASCADE)
+    drive = models.ForeignKey(Drive, on_delete=models.CASCADE, related_name='folders')
 
     # children = models.Manager()  # Default manager for accessing children
 
@@ -18,9 +18,9 @@ class Folder(models.Model):
 class File(models.Model):
     name = models.CharField(max_length=50)
     file = models.FileField(upload_to='files/')
-    drive = models.ForeignKey('Drive', on_delete=models.CASCADE)
+    drive = models.ForeignKey('Drive', on_delete=models.CASCADE,related_name='files')
 
-    # folder = models.ForeignKey('Folder', related_name='files', on_delete=models.CASCADE)  # Add related_name
+    folder = models.ForeignKey('Folder', related_name='files', on_delete=models.CASCADE, null=True,blank=True)  # Add related_name
 
 
 

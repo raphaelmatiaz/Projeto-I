@@ -20,8 +20,8 @@ def show_home_drive(request):
 
     else:
         user = request.user
-        folders = user.drive.folder_set.filter(parent=None).all()
-        files = user.drive.file_set.all()
+        folders = user.drive.folders.filter(parent=None).all()
+        files = user.drive.files.all()
         
         print(f"{user}'s Folders: {folders}")
         form = FileForm()
@@ -112,6 +112,7 @@ def upload_file(request):
             new_file = form.save(commit=False)  # Don't save immediately
             new_file.drive = drive  # Assign the Drive instance
             new_file.name = new_file.file.name
+
             new_file.save()  # Now save the File model with Drive association
             return redirect('home_drive')  # Replace 'success_url' with your success page URL
    
@@ -120,14 +121,19 @@ def upload_file(request):
     return render(request, 'base_drive.html', context)
 
 
-
+#CURRENT FOLDER. (sends context 'parent_folder' as current folder ID to template)
 def open_folder(request, folder_id):
 
     
     # nested_folders = []
     form = FileForm()
     user = request.user
-    all_folders = Folder.objects.filter(drive=user.drive, parent=folder_id).all()
+    # all_folders = Folder.objects.filter(drive=user.drive, parent=folder_id).all()
+    all_folders = user.drive.folders.filter(parent=folder_id).all()
+    # all_files = File.objects.filter(folder__pk=folder_id).all()
+    all_files = user.drive.files.filter(folder__pk=folder_id).all()
+    print(f"Folder id is:{folder_id}")
+    print(f"Files are:{all_files}")
     # print(f"All folders")
     # for folder in all_folders:
 
@@ -139,7 +145,7 @@ def open_folder(request, folder_id):
     # target_folder = Folder.objects.get(pk=folder_id)
     # # subfolders = target_folder.subfolders.all()
     # print(f"subfolders from {target_folder.name} are {nested_folders}")
-    context = {'form': form, 'parent_folder': folder_id,'folders': all_folders}
+    context = {'form': form, 'parent_folder': folder_id,'folders': all_folders, 'files': all_files}
     return render(request, 'current_folder.html', context)
 
 
