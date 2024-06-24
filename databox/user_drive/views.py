@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from typing import Optional
 
+
 # LOAD THE USER DRIVE UI
 def show_home_drive(request):
 
@@ -35,21 +36,47 @@ def create_folder(request):
     print('create_folder called')
     if request.method == 'POST':
         print('Request method is POST')
-        user = request.user  # Get the currently logged-in user
-        print(f"Current user is {user}")
-        user_drive = user.drive  # Access the associated Drive instance
-        print(f"{user}'s Drive is {user_drive}")
-        form = New_Folder_Form(request.POST,)  # Pass the user's Drive
-        print("Form Created")
-        print(f"Form: {form}")
+        current_folder_id = request.resolver_match.kwargs.get('folder_id')  # Assuming your URL captures the folder ID
+        print(f"Current folder ID is: {current_folder_id}")
 
-        if form.is_valid():
-            print('Form is Valid')
-            folder = form.save(commit=False)  # Create the Folder instance without saving yet
-            print('Created Folder instance without saving yet')
-            folder.drive = user_drive  # Explicitly assign the user's Drive
-            print('Explicitly assign user Drive')
-            folder.save()  # Save the Folder instance
+        # PARENT FOLDER SCENARIO
+        if current_folder_id:
+            
+            user = request.user  # Get the currently logged-in user
+            print(f"Current user is {user}")
+            # user_drive = user.drive  # Access the associated Drive instance
+            print(f"{user}'s Drive is {user_drive}")
+            form = New_Folder_Form(request.POST, current_folder_id)  
+            print("Form Created")
+            print(f"Form: {form}")
+
+            if form.is_valid():
+                print('Form is Valid')
+                folder = form.save(commit=False)  # Create the Folder instance without saving yet
+                print('Created Folder instance without saving yet')
+                folder = Folder()
+                folder.parent = Folder.objects.get(pk=form.parent_id) 
+                print('Explicitly assign user Drive')
+                folder.save()  # Save the Folder instance
+
+                return redirect('current_folder')
+            
+        # DRIVE SCENARIO
+        else:
+            user = request.user
+            user_drive = user.drive
+            form = New_Folder_Form(request.POST)
+
+            if form.is_valid():
+                print('Form is Valid')
+                folder = form.save(commit=False)  # Create the Folder instance without saving yet
+                print('Created Folder instance without saving yet')
+                folder.drive = user_drive  # Explicitly assign the user's Drive
+                print('Explicitly assign user Drive')
+                folder.save()  # Save the Folder instance
+
+                return redirect('home_drive')
+
     else:
         form = New_Folder_Form()  # Create an empty form for GET requests
         # context = {'form': form, 'message': 'Folder created successfully!'}  # Example context
@@ -92,10 +119,12 @@ def upload_file(request):
 
 
 def open_folder(request, folder_id):
+
+    current_folder = folder_id 
     target_folder = Folder.objects.get(pk=folder_id)
     subfolders = target_folder.subfolders.all()
     print(f"subfolders from {target_folder.name} are {subfolders}")
-    context = {'subfolders': subfolders}
+    context = {'parent_folder': current_folder,'subfolders': subfolders}
     return render(request, 'current_folder.html', context)
 
 
