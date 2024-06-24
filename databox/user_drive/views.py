@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from typing import Optional
 
+# Os folders TODOS estao a ser renderizados para a drive. Nunhum nested folder está a ser renderizado dentro do folder pai
+
 
 # LOAD THE USER DRIVE UI
 def show_home_drive(request):
@@ -19,7 +21,7 @@ def show_home_drive(request):
 
     else:
         user = request.user
-        folders = user.drive.folder_set.all()
+        folders = user.drive.folder_set.filter(parent=None).all()
         files = user.drive.file_set.all()
         
         print(f"{user}'s Folders: {folders}")
@@ -54,10 +56,10 @@ def create_folder(request):
                 print('Form is Valid')
                 folder = form.save(commit=False)  # Create the Folder instance without saving yet
                 print('Created Folder instance without saving yet')
-                folder = Folder()
-                folder.parent = Folder.objects.get(pk=form.parent_id) 
+                form.drive=user.drive
+                form.parent=Folder.objects.get(id=current_folder_id)
                 print('Explicitly assign user Drive')
-                folder.save()  # Save the Folder instance
+                form.save()  # Save the Folder instance
 
                 return redirect('current_folder')
             
@@ -120,11 +122,22 @@ def upload_file(request):
 
 def open_folder(request, folder_id):
 
-    current_folder = folder_id 
-    target_folder = Folder.objects.get(pk=folder_id)
-    subfolders = target_folder.subfolders.all()
-    print(f"subfolders from {target_folder.name} are {subfolders}")
-    context = {'parent_folder': current_folder,'subfolders': subfolders}
+    
+    nested_folders = []
+    user = request.user
+    all_folders = Folder.objects.filter(drive=user.drive, parent=folder_id).all()
+    # print(f"All folders")
+    # for folder in all_folders:
+
+    #     if folder.id == folder_id:
+
+    #         nested_folders.append(folder)
+
+    # current_folder = folder_id 
+    # target_folder = Folder.objects.get(pk=folder_id)
+    # # subfolders = target_folder.subfolders.all()
+    # print(f"subfolders from {target_folder.name} are {nested_folders}")
+    context = {'parent_folder': folder_id,'folders': all_folders}
     return render(request, 'current_folder.html', context)
 
 

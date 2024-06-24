@@ -6,7 +6,7 @@
         {% for folder in folders %}
 
             <li>
-                <a href="{% url 'open_folder' subfolder.id subfolder.name %}">
+                <a href="{% url 'current_folder' folder.id %}">
                     <drive-folder data-folder-name="{{ folder.name }}">
                     </drive-folder>
                 </a>
