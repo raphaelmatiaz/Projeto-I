@@ -7,7 +7,7 @@
 
             <li>
                 <a href="{% url 'current_folder' folder.id %}">
-                    <drive-folder data-folder-name="{{ folder.name }}">
+                    <drive-folder data-folder-name="{{ folder.name }}" data-folder-id="{{ folder.id }}">
                     </drive-folder>
                 </a>
             </li>
