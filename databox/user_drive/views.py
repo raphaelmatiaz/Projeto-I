@@ -1,11 +1,13 @@
+import zipfile
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import New_Folder_Form, FileForm
-from .models import Folder, File, Drive
+from .models import Folder, Drive
 from django.urls.base import reverse
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import FileResponse, HttpResponse
 from typing import Optional
+from django.contrib.auth import logout
 
 
 # LOAD THE USER DRIVE UI
@@ -122,6 +124,7 @@ def upload_file(request):
 
 
 #CURRENT FOLDER. (sends context 'parent_folder' as current folder ID to template)
+@login_required
 def open_folder(request, folder_id):
 
     
@@ -149,6 +152,14 @@ def open_folder(request, folder_id):
     return render(request, 'current_folder.html', context)
 
 
-def trigger_view(request):
-    # This view can later process data sent from the component
-    return HttpResponse('View Triggered!')
+
+
+
+# ---------------------------------------------------------------
+@login_required
+def logout_view(request):
+  logout(request)
+  return redirect('login')
+
+
+

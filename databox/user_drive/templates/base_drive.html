@@ -84,9 +84,9 @@
             <div class="dropdown">
                 <img id="profile-icon" src="{% static '/media/user_profile.png' %}" alt="">
                 <div class="dropdown-content">
-                  <a href="#">Logout</a>
+                  <a href="{% url 'logout' %}">Logout</a>
                   <a href="#">Change Password</a>
-                  <a href="#">Delete Account</a>
+                  {% comment %} <a href="#">Delete Account</a> {% endcomment %}
                 </div>
               </div>
         </div>
