@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="{% static 'user_drive/css/base_drive.css' %}">
     <script type="module" src="{% static 'user_drive/js/WebComponents.js' %}"></script>
     <script type="module" src="{% static 'user_drive/js/base_drive.js' %}"></script>
+    
+    {% block JS %}
+
+
+    {% endblock  %}
 </head>
 
 <body>
@@ -86,9 +91,8 @@
                 <div class="dropdown-content">
                   <a href="{% url 'logout' %}">Logout</a>
                   <a href="#">Change Password</a>
-                  {% comment %} <a href="#">Delete Account</a> {% endcomment %}
                 </div>
-              </div>
+            </div>
         </div>
 
         <div id="drive-options-wrapper">
@@ -103,6 +107,10 @@
                     <img src="{% static '/media/upload_files.png' %}" alt="">
                     <p>Upload Files</p>
                 </div>
+
+                {% block backwards_button %}
+
+                {% endblock  %}
         </div>
 
         <div id="current-folder-path-wrapper">

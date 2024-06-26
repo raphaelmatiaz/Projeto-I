@@ -90,7 +90,7 @@ Foldertemplate.innerHTML = `
 
 .web-folder-wrapper:hover {
     border: 1px solid var(--color-secondary);
-    background-color: var(--color-primary)
+    background-color: var(--color-primary);
     box-shadow: 1px 1px 5px var(--color-grey-2);
     cursor: pointer;
     color: var(--color-light);
@@ -273,7 +273,7 @@ Filetemplate.innerHTML = `
 
 .web-folder-wrapper:hover {
     border: 1px solid var(--color-secondary);
-    background-color: var(--color-primary)
+    background-color: var(--color-primary);
     box-shadow: 1px 1px 5px var(--color-grey-2);
     color: var(--color-light);
     
@@ -332,10 +332,28 @@ class DriveFile extends HTMLElement {
         this.shadowRoot.appendChild(Filetemplate.content.cloneNode(true));
         
         const deleteSvg = this.shadowRoot.querySelector("#delete-svg");
-        const downloadSvg = document.querySelector("#download-svg");
+        const downloadSvg = this.shadowRoot.querySelector("#download-svg");
 
-        downloadSvg.addEventListener('click', () => {
-            viewUrl
+        downloadSvg.addEventListener('click', async () => {
+            // const viewUrl = downloadSvg.dataset.viewUrl;
+            
+            // Send the request using Fetch API
+            const response = await fetch(this.viewUrl);
+            
+            // Handle the response based on the expected behavior
+            if (response.ok) {
+              // Download the file (might involve further processing)
+              const blob = await response.blob();
+              const filename = getFilenameFromResponse(response); // Implement logic to get filename from response headers or data
+              downloadBlob(blob, filename);
+            } else {
+              // Handle errors (display message, etc.)
+              console.error("Error downloading file:", response.statusText);
+            }
+          });
+    
+        deleteSvg.addEventListener('click', () => {
+            console.log(" delete clicked")
         })
     }
     

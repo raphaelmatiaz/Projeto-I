@@ -12,8 +12,6 @@ class Folder(models.Model):
     parent = models.ForeignKey('Folder', related_name="subfolders", blank=True, null=True, on_delete=models.CASCADE)
     drive = models.ForeignKey(Drive, on_delete=models.CASCADE, related_name='folders')
 
-    # children = models.Manager()  # Default manager for accessing children
-
 
 class File(models.Model):
     name = models.CharField(max_length=50)

@@ -4,6 +4,14 @@ window.onload = async () => {
 
 console.log('this is JS for base drive');
 
+// se backbutton existir atribuir event listner, senao nao atribuir
+const backButton = document.querySelector('#back-button');
+    if (backButton) {
+    backButton.addEventListener('click', () => {
+        window.history.back();
+      });
+    }
+
 // CONSTANTS
 
 // buttons

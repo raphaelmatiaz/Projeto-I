@@ -125,8 +125,8 @@ a {
     grid-row: 3 / 4;
     grid-column: 2 / 4;
 
-    background-color: var(--color-primary);
-    box-shadow: 5px 5px 5px var(--color-secondary) inset;
+    background-color: var(--color-grey-1);
+    box-shadow: 5px 5px 5px var(--color-grey-2) inset;
     border: 1px solid black;
     overflow-y: scroll;
 }
@@ -414,6 +414,15 @@ form label {
     max-height: 50px;
     display: block; 
     margin-right: 1vw;
+    
+}
+
+.drive-option svg {
+    max-width: 4vw;
+    max-height: 50px;
+    display: block; 
+    margin-right: 1vw;
+    margin-left: 0.5vw;
 }
 
 .drive-option:hover {

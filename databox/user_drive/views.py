@@ -115,15 +115,25 @@ def upload_file(request):
 @login_required
 def open_folder(request, folder_id):
 
+    # Vai buscar os parents do folder que corresponde a 'folder_id', subsequentemente, até o parent ser 'None'
+    folder_chain = []
+    folder = get_object_or_404(Folder, pk=folder_id)
+    folder_chain.append(folder)
+
+    while folder.parent:
+        folder = folder.parent
+        folder_chain.append(folder)
+
+    # Inverter o array que contém a lista de parents 
+    inverted_chain = folder_chain[::-1]
+
     form = FileForm()
     user = request.user
     all_folders = user.drive.folders.filter(parent=folder_id).all()
     all_files = user.drive.files.filter(folder__pk=folder_id).all()
-    context = {'form': form, 'parent_folder': folder_id,'folders': all_folders, 'files': all_files}
+    
+    context = {'form': form, 'parent_folder': folder_id,'folders': all_folders, 'files': all_files, 'folder_chain': inverted_chain}
     return render(request, 'current_folder.html', context)
-
-
-
 
 
 # ---------------------------------------------------------------
