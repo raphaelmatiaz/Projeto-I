@@ -1,4 +1,17 @@
-{% extends 'base_drive.html' %}  
+{% extends 'base_drive.html' %}
+
+{% block current_tree_path %}
+
+  {% for folder in folders %}
+  {% if folder.parent_folder %}
+    <p>
+        &gt; {{ folder.parent_folder.name }}
+    </p>
+    {% endif %}
+
+  {% endfor %}
+
+{% endblock %}
 
 {% block content %}
     <ul>
@@ -20,7 +33,7 @@
         {% for file in files %}
 
         <li>
-            <drive-file data-file-id="{{ file.id }}" data-file-name="{{ file.name }}">
+            <drive-file dataFileID="{{ file.id }}" data-file-name="{{ file.name }}" viewUrl="{% url 'download_file' file.id %}">
             </drive-file>
         </li>
 

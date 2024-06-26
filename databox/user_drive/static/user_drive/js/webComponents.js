@@ -152,15 +152,15 @@ class DriveFolder extends HTMLElement {
 
         const url = `{% url 'trigger_view' %}`;  // Assuming URL tag works in your component
 
-        // Use POST to potentially send data later // Optionally add data to the request body (e.g., JSON data)
-        fetch(url, { method: 'POST',})
-        .then(response => response.text())
-        .then(data => {
-            console.log('View triggered:', data);  // Log the response from the view
-        })
-        .catch(error => {
-            console.error('Error triggering view:', error);
-        });
+        // // Use POST to potentially send data later // Optionally add data to the request body (e.g., JSON data)
+        // fetch(url, { method: 'POST',})
+        // .then(response => response.text())
+        // .then(data => {
+        //     console.log('View triggered:', data);  // Log the response from the view
+        // })
+        // .catch(error => {
+        //     console.error('Error triggering view:', error);
+        // });
             
         }
 
@@ -321,19 +321,22 @@ Filetemplate.innerHTML = `
 class DriveFile extends HTMLElement {
     
     shadowRoot = null;
-
-    constructor() {
+    viewUrl = null;
+    dataFileID = null;
+    constructor(viewUrl, dataFileID) {
         super()
 
+        this.viewUrl = viewUrl
+        this.dataFileID = dataFileID
         this.shadowRoot = this.attachShadow({ mode: 'closed' });
         this.shadowRoot.appendChild(Filetemplate.content.cloneNode(true));
         
-        const deleteSvg = document.querySelector("#delete-svg");
-        const downloadSvg = document.querySelector("#delete-svg");
+        const deleteSvg = this.shadowRoot.querySelector("#delete-svg");
+        const downloadSvg = document.querySelector("#download-svg");
 
-        // deleteSvg.addEventListener('click', () => {
-            
-        // })
+        downloadSvg.addEventListener('click', () => {
+            viewUrl
+        })
     }
     
     connectedCallback() {

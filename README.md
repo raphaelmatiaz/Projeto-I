@@ -39,111 +39,57 @@ In order to install the app, execute the following steps in order:
 
 Open up the terminal of your choice and **cd** into the location where you'd like to clone the repository, for example: _/desktop_. Then type the following command:
 ```
-     git clone https://github.com/raphaelmatiaz/CryptoFastAPI.git
+     git clone https://github.com/raphaelmatiaz/Projeto-I.git
 ```
 Alteratively, you may also dowload and unzip the repo by clicking the green <**CODE**> button on the top right corner of the repo, and then clicking **Download Zip**.
 
-2. ***Entering the Cloned Repository*** : 
+2. ***Entering the app from the cloned repository*** : 
 
 From you current path location, **cd** into the cloned repository:
 ```
-     cd CryptoFastAPI
+     cd Projeto-I
 ```
+
+Then **cd** into the app:
+```
+    cd databox
+```
+
 3. ***Installing and Running the APP*** : 
 
-Now that you are in the cloned repository path, start by installing the app via the following command:
+Now that you are in the cloned repository path, you may install the app via the following command:
 ```
     make install
 ```
+
+4.***Creating a Super-User*** : 
+
+In case you want to use the app's backoffice, a user with staff privillages will be required. You can create one via:
+```
+    make super-user
+```
+This command will prompt you through django's default super-user creation system for details.
+
+
 ---------------------
 /!\ **NOTE** /!\  
-_Make sure **Docker** and **docker-compose** are propperly installed on your system in order for this step to work! 
+_Make sure **Docker** and **docker-compose** are propperly installed on your system in order for these steps to work! If you are on windows, make sure docker daemon is running.
 
 #
-## Using the API Application
+## Using Databox
 
-The API will be running immedialy after intallation. You can open up a new browser window and acces the following url to start interacting with it:
+The app will be running immedialy after intallation. You can open up a new browser window and acces the following url to start interacting with it:
 ```
     http://localhost:8000/
 ```
-In order to use the app, simply add any of the following url endpoints to your current root url __localhost:8000/__. Each endpoint will submit an HTTP 'GET' request, and return the latest crypto informations uniquely relative to it in JSON format:
 
-**EXAMPLE** 
+The app is intuitive to use. You can start by registering an account and logging in to access your personal drive, and then manage your files through the dedicated UI.
 
-```
-# Request to endpoint '/bitcoin'
+The **New Folder** button will create a new folder within your current folder-tree path (if you are in 'home' it will create a folder within 'home', if you are in a folder named 'Folder A' it will create a new folder within 'Folder A' and so on). The same is true for file uploads using the **Upload Files** button.
 
-http://localhost:8000/bitcoin
-```
+You can open any folder and view it's contents by clicking on it and you may download or delete each folder and/or file by clicking their corresponding **download** and **delete** icons.
 
-```
-# Reponse sample from that request
-
-[
-  {
-    "id": "90",
-    "symbol": "BTC",
-    "name": "Bitcoin",
-    "nameid": "bitcoin",
-    "rank": 1,
-    "price_usd": "64711.26",
-    "percent_change_24h": "-2.65",
-    "percent_change_1h": "-0.56",
-    "percent_change_7d": "1.37",
-    "price_btc": "1.00",
-    "market_cap_usd": "1272756915151.50",
-    "volume24": 26503101700.7098,
-    "volume24a": 27001498893.2909,
-    "csupply": "19668246.00",
-    "tsupply": "19668246",
-    "msupply": "21000000"
-  }
-]
-```
-
-
-**ENDPOINTS**
-
-*__Raw Response:__*
-all the data (untreated)
-
-* **/bitcoin** : Gets the latest information for Bitcoin;
-
-* **/top100** : Gets the latest information for all Altcoins, from rank 2 to  rank 101 (meaning the top 100 cryptocurrencies immediatly after Bitcoin);
-
-* **/exchanges** : Gets the latest information on Crypto Exchange Platforms.
-
-*__Filtered Response:__*
-most relevant fields from each endpoint 
-
-
-* **/bitcoin/filtered** : Gets the following latest information for Bitcoin:
-
-    * Symbol
-    * Name
-    * Rank
-    * Price USD
-    * Price BTC
-    * Market Cap USD
-    * Volume 24h
-
-* **/top100/filtered** : Gets the following information for all Altcoins, from rank 2 to  rank 101 (meaning the top 100 cryptocurrencies immediatly after Bitcoin);
-
-    * Symbol
-    * Name
-    * Rank
-    * Price USD
-    * Price BTC
-    * Market Cap USD
-    * Volume 24h
-
-* **/exchanges/filtered** : Gets the latest information on Crypto Exchange Platforms.
-
-    * Name
-    * Volume USD
-    * Active_pairs
-    * Website URL
-    * Country
+You may logout by hovering over the profile icon in the top right corner and clicking the **Logout** button.
 
 **START AND STOP THE APP**
 
@@ -161,23 +107,6 @@ make start
 make stop
 ```
 Alternatively, you may also access the terminal instance running the app, and use "**CTRL + C**" to terminate the current running process.
-
-**LOGGING MESSAGES**
-
-The APP includes custom logging messages to keep you informed during use. These messages are easily distinguishable as they start with '**INFO:main**' and are encased in little boxes for readability purposes.
-
-They detail each relevant step of a request, providing information encased in helpful messages, such as **status codes** or even **date and time** of each event [Time zone is set to 'Portugal : Lisbon'].
-
-**EXAMPLE** 
-
-```
-crypto-1  | INFO:main:==========================================================================
-crypto-1  | INFO:main:--------------------------- 24/04/2024 17:26:58---------------------------
-crypto-1  | INFO:main: Successfully returned latest Bitcoin data in JSON format! 
-crypto-1  | INFO:main: Check 'localhost/8000/bitcoin' to view the response! 
-crypto-1  | INFO:main:==========================================================================
-```
-
 
 ------------------
 ------------------
