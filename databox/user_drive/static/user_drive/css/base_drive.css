@@ -129,6 +129,18 @@ a {
     box-shadow: 5px 5px 5px var(--color-grey-2) inset;
     border: 1px solid black;
     overflow-y: scroll;
+
+    display: flex;
+    flex-direction: column;
+
+}
+
+#drive-view-contents-wrapper #empty-folder-message {
+
+    align-self: center;
+    margin-top: 30vh;
+
+
 }
 
 #pop-up-view {

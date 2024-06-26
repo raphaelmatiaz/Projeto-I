@@ -1,3 +1,4 @@
+import mimetypes
 import zipfile
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import New_Folder_Form, FileForm
@@ -8,6 +9,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import FileResponse, HttpResponse
 from typing import Optional
 from django.contrib.auth import logout
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 
 
 # LOAD THE USER DRIVE UI
@@ -54,7 +57,7 @@ def create_folder(request):
                 form.parent=Folder.objects.get(id=current_folder_id)
                 form.save()  
 
-                return redirect('current_folder')
+                return render('current_folder')
             
         # DRIVE SCENARIO
         else:
@@ -131,9 +134,15 @@ def open_folder(request, folder_id):
     user = request.user
     all_folders = user.drive.folders.filter(parent=folder_id).all()
     all_files = user.drive.files.filter(folder__pk=folder_id).all()
-    
-    context = {'form': form, 'parent_folder': folder_id,'folders': all_folders, 'files': all_files, 'folder_chain': inverted_chain}
-    return render(request, 'current_folder.html', context)
+
+    if not all_folders and not all_files:
+        empty_folder = True
+        context = {'form': form, 'parent_folder': folder_id,'folders': all_folders, 'files': all_files, 'folder_chain': inverted_chain, 'folder_is_empty': empty_folder}
+        return render(request, 'current_folder.html', context)
+    else:
+    # print(f"Files are:{all_files} Folders are:{all_folders}")
+        context = {'form': form, 'parent_folder': folder_id,'folders': all_folders, 'files': all_files, 'folder_chain': inverted_chain}
+        return render(request, 'current_folder.html', context)
 
 
 # ---------------------------------------------------------------
@@ -148,6 +157,8 @@ def logout_view(request):
 @login_required
 def download_file(request, file_id):
     user = request.user
-    file = get_object_or_404(File, owner=user, pk=file_id)  # Filter by primary key (id)
+    file = get_object_or_404(File, owner=user, pk=file_id)
     response = FileResponse(file.file_path.open('rb'), as_attachment=True, filename=file.file_name)
+    response['Content-Type'] = mimetypes.guess_type(file.file_path)[0]
     return response
+

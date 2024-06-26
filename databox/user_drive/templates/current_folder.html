@@ -30,6 +30,13 @@
 {% endblock %}
 
 {% block content %}
+
+ {% if folder_is_empty %} 
+
+ <p id="empty-folder-message">This folder is empty<p>
+
+    {% else %} 
+
     <ul>
 
         {% for folder in folders %}
@@ -50,11 +57,13 @@
 
         <li>
             <drive-file dataFileID="{{ file.id }}" data-file-name="{{ file.name }}" viewUrl="{% url 'download_file' file.id %}">
+                
             </drive-file>
         </li>
 
         {% endfor %}
 
     </ul>
+    {% endif %} 
 
 {% endblock %}
