@@ -1,5 +1,7 @@
 import mimetypes
 import os
+import shutil
+import tempfile
 import zipfile
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import New_Folder_Form, FileForm
@@ -26,14 +28,14 @@ def show_home_drive(request):
 
     else:
         user = request.user
+        drive = user.drive
         folders = user.drive.folders.filter(parent=None).all()
-        files = user.drive.files.all()
+        files = user.drive.files.filter(folder=None).all()
+
         form = FileForm()
         context = {'folders': folders, 'form': form, 'files': files}
 
         return render(request,'home_drive.html', context)
-
-
 
 # CREATE A NEW FOLDER
 @login_required(login_url='/')
@@ -58,7 +60,8 @@ def create_folder(request):
                 form.parent=Folder.objects.get(id=current_folder_id)
                 form.save()  
 
-                return render(request, 'current_folder')
+                # return render(request, 'current_folder')
+                return response
             
         # DRIVE SCENARIO
         else:
@@ -163,12 +166,80 @@ def download_file(request, file_id):
     with open(file_obj.file.path, 'rb') as f:
         file_data = f.read()
 
-    content_type = 'application/octet-stream'  # Default content type
+    content_type = 'application/octet-stream'  
 
     response = HttpResponse(file_data, content_type=content_type)
     response['Content-Disposition'] = f'attachment; filename={file_obj.name}'
     
     return response
     
+@login_required
+def delete_file(request, file_id):
+    
+    file_obj = get_object_or_404(File, pk=file_id)
 
+    # Delete the file from storage
+    try:
+        if os.path.exists(file_obj.file.path):
+            os.remove(file_obj.file.path)
+    except OSError as e:
+        # Handle potential errors during file deletion (e.g., permission issues)
+        return JsonResponse({'error': f"Error deleting file: {e}"}, status=400)
 
+    # Delete the file object from the database
+    file_obj.delete()
+
+    return redirect('home_drive')
+
+@login_required
+def download_folder(request, folder_id):
+
+  folder_obj = get_object_or_404(Folder, pk=folder_id)  # Replace Folder with your model name
+
+  # Check if folder is empty
+  if not os.listdir(folder_obj.path):
+      return JsonResponse({'message': 'Folder is empty.'})
+
+  # Create a temporary file for the ZIP archive
+  temp_file = tempfile.NamedTemporaryFile(delete=False)
+
+  try:
+      # Create a ZIP archive
+      with zipfile.ZipFile(temp_file, 'w') as zip_archive:
+          for root, _, filenames in os.walk(folder_obj.path):
+              for filename in filenames:
+                  file_path = os.path.join(root, filename)
+                  if os.path.isfile(file_path):
+                      arcname = os.path.relpath(file_path, folder_obj.path)  # Preserve folder structure
+                      zip_archive.write(file_path, arcname=arcname)
+
+  except Exception as e:
+      # Handle potential errors during ZIP creation
+      return JsonResponse({'error': f"Error creating archive: {e}"}, status=500)
+
+  # Set response headers
+  response = JsonResponse(temp_file.read(), content_type='application/zip')
+  response['Content-Disposition'] = f'attachment; filename={folder_obj.name}.zip'
+
+  # Close and delete the temporary file
+  temp_file.close()
+  os.remove(temp_file.name)
+
+  return response
+
+@login_required
+def delete_folder(request, folder_id):
+
+    folder_obj = get_object_or_404(Folder, pk=folder_id)  # Replace Folder with your model name
+
+    # try:
+    #   # Delete the folder recursively (including subfolders and files)
+    #   shutil.rmtree(folder_obj.path)
+
+    #   # Delete the folder object from the database
+    folder_obj.delete()
+
+    return JsonResponse({'success': 'Folder deleted successfully'})
+    # except OSError as e:
+      # Handle potential errors during folder deletion (e.g., permission issues)
+    return JsonResponse({'error': f"Error deleting folder: {e}"}, status=400)

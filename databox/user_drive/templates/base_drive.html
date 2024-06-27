@@ -110,7 +110,7 @@
                 <img id="profile-icon" src="{% static '/media/user_profile.png' %}" alt="">
                 <div class="dropdown-content">
                   <a href="{% url 'logout' %}">Logout</a>
-                  <a href="#">Change Password</a>
+                  {% comment %} <a href="#">Change Password</a> {% endcomment %}
                 </div>
             </div>
         </div>
