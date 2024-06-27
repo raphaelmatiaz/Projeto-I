@@ -2,11 +2,19 @@ install:
 	docker-compose up --build
 
 start:
-	- docker-compose up
+	docker-compose up
 
 stop:
-	- docker-compose down
+	docker-compose down
 
 
 super-user: 
-	poetry run python manage.py createsuperuser --username admin --email admin@example.com
+	docker-compose run --rm python manage.py createsuperuser 
+
+setup: install 
+
+	docker-compose run python manage.py makemigrations
+	docker-compose run --rm python manage.py createsuperuser 
+	docker-compose run --rm python manage.py runserver
+
+

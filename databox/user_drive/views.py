@@ -1,4 +1,5 @@
 import mimetypes
+import os
 import zipfile
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import New_Folder_Form, FileForm
@@ -57,7 +58,7 @@ def create_folder(request):
                 form.parent=Folder.objects.get(id=current_folder_id)
                 form.save()  
 
-                return render('current_folder')
+                return render(request, 'current_folder')
             
         # DRIVE SCENARIO
         else:
@@ -156,9 +157,18 @@ def logout_view(request):
 # DOWNLOAD FILE
 @login_required
 def download_file(request, file_id):
-    user = request.user
-    file = get_object_or_404(File, owner=user, pk=file_id)
-    response = FileResponse(file.file_path.open('rb'), as_attachment=True, filename=file.file_name)
-    response['Content-Type'] = mimetypes.guess_type(file.file_path)[0]
+
+    file_obj = get_object_or_404(File, pk=file_id)
+
+    with open(file_obj.file.path, 'rb') as f:
+        file_data = f.read()
+
+    content_type = 'application/octet-stream'  # Default content type
+
+    response = HttpResponse(file_data, content_type=content_type)
+    response['Content-Disposition'] = f'attachment; filename={file_obj.name}'
+    
     return response
+    
+
 
