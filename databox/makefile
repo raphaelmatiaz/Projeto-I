@@ -7,8 +7,6 @@ start:
 stop:
 	docker-compose down
 
-migrations:
-
 
 super-user: 
 	docker-compose run --rm databox poetry run python manage.py createsuperuser 

@@ -61,12 +61,13 @@ cd databox
 
 Now that you are in the app's path, you may install the app via the following command:
 ```
-make install
+make setup
 ```
+This command will setup and run the app. It will create a super user 'admin', for which you'll be prompted for a password.
 
 4.***Creating a Super-User*** : 
 
-In case you want to use the app's backoffice, a user with staff privillages will be required. You can create one via:
+In case you want you can create more super users via:
 ```
 make super-user
 ```
