@@ -80,8 +80,13 @@ def create_folder(request):
                 print('Explicitly assign user Drive')
                 folder.save()  
 
-                return redirect('current_folder', folder_id=folder.parent.id)
+                if folder.parent:
 
+                    return redirect('current_folder', folder_id=folder.parent.id)
+
+                else:
+
+                    return redirect('home_drive')
     else:
         print("GET")
         form = New_Folder_Form()  
@@ -117,7 +122,14 @@ def upload_file(request):
 
             new_file.save()  
             # return redirect('home_drive')
-            return redirect(f'/drive/folder/{new_file.folder.id}')
+
+            if new_file.folder:
+            
+                return redirect(f'/drive/folder/{new_file.folder.id}')
+            
+            else:
+
+                return redirect('home_drive')
    
 
     context = {'form': form, 'drive': drive}
@@ -196,7 +208,13 @@ def delete_file(request, file_id):
     # Delete the file object from the database
     file_obj.delete()
 
-    return redirect(f"/drive/folder/{file_obj.folder.id}")
+    if file_obj.folder:
+
+        return redirect(f"/drive/folder/{file_obj.folder.id}")
+    
+    else:
+
+        return redirect('home_drive')
 
 @login_required
 def download_folder(request, folder_id):
@@ -245,11 +263,12 @@ def delete_folder(request):
         if form.is_valid():
 
             folder = get_object_or_404(Folder,pk=form.cleaned_data['id']) 
-            folder_parent = folder.parent.id
+            
             folder.delete()  
 
-            if folder_parent:
+            if folder.parent:
                 
+                folder_parent = folder.parent.id
                 return redirect(f"/drive/folder/{folder_parent}")
 
             else:
