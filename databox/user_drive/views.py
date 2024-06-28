@@ -230,16 +230,18 @@ def download_folder(request, folder_id):
 @login_required
 def delete_folder(request, folder_id):
 
-    folder_obj = get_object_or_404(Folder, pk=folder_id)  # Replace Folder with your model name
+    user = request.user
+    folder_obj = get_object_or_404(Folder, pk=folder_id)
 
     # try:
-    #   # Delete the folder recursively (including subfolders and files)
-    #   shutil.rmtree(folder_obj.path)
+       
+        # shutil.rmtree(folder_obj.path)
 
-    #   # Delete the folder object from the database
+        
     folder_obj.delete()
 
-    return JsonResponse({'success': 'Folder deleted successfully'})
+    return "Folder deleted successfully"  # Simple success message
+
     # except OSError as e:
-      # Handle potential errors during folder deletion (e.g., permission issues)
-    return JsonResponse({'error': f"Error deleting folder: {e}"}, status=400)
+        # Handle potential errors during folder deletion (e.g., permission issues)
+    # return f"Error deleting folder: {e}"
