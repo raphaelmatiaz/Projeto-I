@@ -20,3 +20,9 @@ class FileForm(forms.ModelForm):
             )
         }
 
+class DeleteFolderForm(forms.ModelForm):
+    id = forms.CharField(widget=forms.HiddenInput)
+    class Meta:
+        model = Folder
+        exclude = ['drive', 'name']
+        

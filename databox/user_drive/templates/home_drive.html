@@ -52,9 +52,10 @@
                         </form>
                     </div>
             
-                    <form id="delete-folder-form" method="DELETE" action="{% url 'delete_folder' folder.id %}">
+                    <form id="delete-folder-form" method="POST" action="{% url 'delete_folder' %}">
                         {% csrf_token %}
-
+                        
+                        <input type="hidden" name="id" value="{{ folder.id }}">
                         <div class="svg-wrapper">
                             <button type="submit">
                                 <svg id="delete-svg" class="web-component-icon"  width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">

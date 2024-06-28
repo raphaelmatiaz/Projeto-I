@@ -2,9 +2,10 @@ import mimetypes
 import os
 import shutil
 import tempfile
+from webbrowser import get
 import zipfile
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import New_Folder_Form, FileForm
+from .forms import DeleteFolderForm, New_Folder_Form, FileForm
 from .models import Folder, Drive, File
 from django.urls.base import reverse
 from django.contrib.auth import get_user_model
@@ -40,31 +41,33 @@ def show_home_drive(request):
 # CREATE A NEW FOLDER
 @login_required(login_url='/')
 def create_folder(request):
+    # breakpoint()
     if request.method == 'POST':
-        current_folder_id = request.resolver_match.kwargs.get('folder_id')  
+        # current_folder_id = request.resolver_match.kwargs.get('folder_id')  
+        # print("post")
 
+        # # PARENT FOLDER SCENARIO
+        # if current_folder_id:
+            
+        #     user = request.user  
+            
 
-        # PARENT FOLDER SCENARIO
-        if current_folder_id:
             
-            user = request.user  
+        #     form = New_Folder_Form(request.POST, current_folder_id)  
             
-
-            
-            form = New_Folder_Form(request.POST, current_folder_id)  
-            
-            if form.is_valid():
+        #     if form.is_valid():
                 
-                folder = form.save(commit=False)  
-                form.drive=user.drive
-                form.parent=Folder.objects.get(id=current_folder_id)
-                form.save()  
+        #         folder = form.save(commit=False)  
+        #         form.drive=user.drive
+        #         form.parent=Folder.objects.get(id=current_folder_id)
+        #         form.save()  
 
-                # return render(request, 'current_folder')
-                return response
+        #         # return render(request, 'current_folder')
+        #         return redirect('current_folder', folder_id=current_folder_id)
             
-        # DRIVE SCENARIO
-        else:
+        # # DRIVE SCENARIO
+        # else:
+            print("drive")
             user = request.user
             user_drive = user.drive
             form = New_Folder_Form(request.POST)
@@ -77,11 +80,12 @@ def create_folder(request):
                 print('Explicitly assign user Drive')
                 folder.save()  
 
-                return redirect('home_drive')
+                return redirect('current_folder', folder_id=folder.parent.id)
 
     else:
+        print("GET")
         form = New_Folder_Form()  
-
+    print("ERRO")
     return redirect('home_drive')
 
 
@@ -107,14 +111,17 @@ def upload_file(request):
         form = FileForm(request.POST, request.FILES)
         if form.is_valid():
             new_file = form.save(commit=False)  
+            
             new_file.drive = drive  
             new_file.name = new_file.file.name
 
             new_file.save()  
-            return redirect('home_drive')  
+            # return redirect('home_drive')
+            return redirect(f'/drive/folder/{new_file.folder.id}')
    
 
     context = {'form': form, 'drive': drive}
+    
     return render(request, 'base_drive.html', context)
 
 
@@ -189,7 +196,7 @@ def delete_file(request, file_id):
     # Delete the file object from the database
     file_obj.delete()
 
-    return redirect('home_drive')
+    return redirect(f"/drive/folder/{file_obj.folder.id}")
 
 @login_required
 def download_folder(request, folder_id):
@@ -228,20 +235,25 @@ def download_folder(request, folder_id):
   return response
 
 @login_required
-def delete_folder(request, folder_id):
+def delete_folder(request):
 
-    user = request.user
-    folder_obj = get_object_or_404(Folder, pk=folder_id)
 
-    # try:
-       
-        # shutil.rmtree(folder_obj.path)
+    if request.method == "POST":
 
+        form = DeleteFolderForm(request.POST)
         
-    folder_obj.delete()
+        if form.is_valid():
 
-    return "Folder deleted successfully"  # Simple success message
+            folder = get_object_or_404(Folder,pk=form.cleaned_data['id']) 
+            folder_parent = folder.parent.id
+            folder.delete()  
 
-    # except OSError as e:
-        # Handle potential errors during folder deletion (e.g., permission issues)
-    # return f"Error deleting folder: {e}"
+            if folder_parent:
+                
+                return redirect(f"/drive/folder/{folder_parent}")
+
+            else:
+
+                return redirect("home_drive")
+            
+    return redirect("home_drive")
