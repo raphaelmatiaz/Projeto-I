@@ -52,9 +52,9 @@
                     <input type="hidden" name="drive" value="{{ user.drive.id }}">
                     <input type="hidden" name="parent" value="{{ parent_folder }}">
                     <label for="folder-name">Folder Name</label>
-                    <input id="folder-name" type="text" placeholder="Enter a folder name" name="name">
+                    <input id="folder-name" type="text" placeholder="Enter a folder name" name="name" required>
                     <div class="cancel-submit-wrapper"> 
-                        <button id="cancel">Cancel</button>
+                        <button id="cancel-new-folder">Cancel</button>
                         <button id="submit">Submit</button>
                     </div>
                 </form>

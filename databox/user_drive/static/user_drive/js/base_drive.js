@@ -61,13 +61,13 @@ uploadFilesBTN.addEventListener('click', () => {
 
 
 // NEW FOLDER FORM 'CANCEL' BUTTON
-// newFolderCancelBTN.addEventListener('click', () => {
-//     console.log("cancel button clicked");
-//     popUpView.style.display = "none";
-//     newFolderForm.style.display = "none"
-//     popUpView.setAttribute('active', 'False');
-//     newFolderForm.setAttribute('active', 'False');
-// });
+newFolderCancelBTN.addEventListener('click', () => {
+    console.log("cancel button clicked");
+    popUpView.style.display = "none";
+    newFolderForm.style.display = "none"
+    popUpView.setAttribute('active', 'False');
+    newFolderForm.setAttribute('active', 'False');
+});
 
 
 // NEW FOLDER FORM 'SUBMIT' BUTTON
@@ -81,9 +81,9 @@ uploadFilesBTN.addEventListener('click', () => {
 uploadFilesCancelBTN.addEventListener('click', () => {
     console.log("cancel button clicked");
     popUpView.style.display = "none";
-    popUpForm.style.display = "none"
+    uploadFilesForm.style.display = "none"
     popUpView.setAttribute('active', 'False');
-    popUpForm.setAttribute('active', 'False');
+    uploadFilesForm.setAttribute('active', 'False');
 });
 
 
